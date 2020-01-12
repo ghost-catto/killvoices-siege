@@ -373,15 +373,26 @@ function onRainbowSixEvent() {
 	let vpEvent;
 	vpEvent = holder;
 	
-	if(holder === 'kill')
+	if( holder === 'kill')
 	{
-		if( killstreak <= 1 )
+
+		++killstreak;
+		if( killstreak === 0 )
 		{
-		vpEvent = 'godly';
-		playVoice(vpEvent);
+			vpEvent = 'hitsnd';
+			headshotnum = 0;
+			playVoice(vpEvent);
 		}
-		else if( killstreak === 2 ){
-			vpEvent = ''
+		else if( killstreak >= 2 ){
+			vpEvent = 'killstreaks';
+			headshotnum = 0;
+			playVoice(vpEvent);
+		}
+		else if ( killstreak >= 5 )
+		{
+			vpEvent = 'probhacking';
+			headshotnum = 0;
+			playVoice(vpEvent);
 		}
 		
 	}
@@ -535,7 +546,7 @@ function onGameEvent(e) {
 				onRainbowSixEvent(e.events[i]);
 		}*/
 		
-		holder = eventName;
+		
 
 		if ( eventName === 'roundStart' ) {
 				vpEvent = 'round_start';
@@ -560,10 +571,11 @@ function onGameEvent(e) {
 		}
 		else if( eventName === 'kill')
 		{
-			++killstreak;
+			holder = 'kill';
 			hstimer = setTimeout(onRainbowSixEvent, 100, [holder, killstreak]);
 		}
 		else if ( eventName === 'headshot' ){
+			holder = 'headshot';
 			clearTimeout(hstimer);
 			++headshotnum;
 			if ( headshotnum === 1){
@@ -575,7 +587,7 @@ function onGameEvent(e) {
 			else if( headshotnum === 3 ){
 				vpEvent = 'threeheadshot';
 			}
-			else if( headshotnum === 4){
+			else if( headshotnum >= 4){
 				vpEvent = 'railgungod';
 			}
 		
