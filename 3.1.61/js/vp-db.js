@@ -1,6 +1,118 @@
 define(() => [
 	// Preinstalled packs
 	{
+	id			: "Quake4Siege",
+		origin		: "app",
+		title		: "Quake4Siege",
+		shortTitle	: "Quake4Siege",
+		acquiredBy	: "preinstall",
+	
+		Dota2: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			double_kill: ["double_kill"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
+		},
+	
+		League_of_Legends: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			double_kill: ["double_kill"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
+		},
+	
+		Splitgate: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			double_kill: ["double_kill"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			headshot: ["accuracy","holy_shit","head_shot"]
+		},
+	
+		CSGO: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			round_start: ["first_blood","rage_quit"],
+			match_start: ["first_blood"],
+			bomb_planted: ["whose_side","batman"],
+			headshot: ["accuracy","holy_shit","head_shot"]
+		},
+	
+		RainbowSix: {
+			headshot: ["headshot"],
+			twoheadshot: ["hstwo"],
+			threeheadshot: ["HS03"],
+			railgungod: ["rail", "perf3"],
+			death: ["death1","death2","death3","death4"],
+			round_start: ["fight", "prepareto", "prepare_team"],
+			victory: ["tscore1"],
+			defeat: ["escore1"],
+			roundone: ["comp0"],
+			roundtwo: ["comp1"],
+			roundthree: ["comp2"],
+			roundfour: ["comp3"],
+			hurt: ["hitsnd"],
+			killstreaks: ["collat","bringthem","exec", "dom", "bers", "shadow"],
+			hurtsmall: ["sargepain"],
+			hurtmed: ["sargepain2"],
+			hurtbig: ["sargepain3"],
+			redleads: ["redleads"],
+			tied: ["tied"]
+		
+			
+		},
+	
+		Overwatch: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+			double_kill: ["double_kill"],
+			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			six_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
+		},
+	
+		PUBG: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+		},
+	
+		Fortnite: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+		},
+	
+		Apex: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
+		},
+	
+		Battlerite: {
+			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
+			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
+			round_start: ["first_blood","rage_quit"],
+		}
+	},
+	{
 		id			: "Arnold",
 		origin		: "app",
 		title		: "Arnold",
@@ -392,116 +504,7 @@ define(() => [
 			match_end: ["HoneySong","Lenny - I've only beene here a few minuts"],
 		}
 	},
-	{
-		id			: "Quake",
-		origin		: "documents",
-		title		: "Quake",
-		shortTitle	: "Quake",
-		acquiredBy	: "download",
-	
-		Dota2: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			double_kill: ["double_kill"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
-		},
-	
-		League_of_Legends: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			double_kill: ["double_kill"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
-		},
-	
-		Splitgate: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			double_kill: ["double_kill"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			headshot: ["accuracy","holy_shit","head_shot"]
-		},
-	
-		CSGO: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			round_start: ["first_blood","rage_quit"],
-			match_start: ["first_blood"],
-			bomb_planted: ["whose_side","batman"],
-			headshot: ["accuracy","holy_shit","head_shot"]
-		},
-	
-		RainbowSix: {
-			headshot: ["headshot"],
-			twoheadshot: ["hstwo"],
-			threeheadshot: ["HS03"],
-			railgungod: ["rail", "perf3"],
-			death: ["death1","death2","death3","death4"],
-			round_start: ["fight", "prepareto", "prepare_team"],
-			victory: ["tscore1"],
-			defeat: ["escore1"],
-			roundone: ["comp0"],
-			roundtwo: ["comp1"],
-			roundthree: ["comp2"],
-			roundfour: ["comp3"],
-			hurt: ["hitsnd"],
-			killstreaks: ["collat","bringthem","exec", "dom", "bers", "shadow"],
-			blueleads: ["blueleads"],
-			redleads: ["redleads"],
-			tied: ["tied"]
 		
-			
-		},
-	
-		Overwatch: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-			double_kill: ["double_kill"],
-			triple_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			quadra_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			penta_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			six_kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"]
-		},
-	
-		PUBG: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-		},
-	
-		Fortnite: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-		},
-	
-		Apex: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			knockout: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			knockedout: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			match_start: ["rage_quit","first_blood","welcome_to_planetside"],
-		},
-	
-		Battlerite: {
-			kill: ["accuracy","commissioner","executioner","high_roller","impressive","mutual","quad_damage","rage_quit","revenge"],
-			death: ["being_farmed","death_streak","fatality","holy_shit","humiliation","knife_fight","prevent_ff","rocket_primary","submission","team_killer","watch_your_step","whose_side"],
-			round_start: ["first_blood","rage_quit"],
-		}
-	},
 	{
 		id			: "Halo",
 		origin		: "documents",

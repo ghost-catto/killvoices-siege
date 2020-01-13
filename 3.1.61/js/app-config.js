@@ -12,7 +12,7 @@ define({
 		}
 	},
 	defaultVolume: 75,
-	defaultVP: 'Arnold',
+	defaultVP: 'Quake4Siege',
 	games: [
 		{
 			id		: 5426,

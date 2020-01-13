@@ -3,6 +3,9 @@ require.config({
 	waitSeconds: 0
 });
 var hstimer;
+var totalhealth;
+var totalhealth2;
+var hurttimer;
 var killstreak = 0;
 var headshotnum = 0;
 var holder;
@@ -18,7 +21,8 @@ require([
 	'app-config',
 	'audio-player',
 	'downloader',
-	'voice-packs'
+	'voice-packs',
+	'libs/howler.min'
 ], function(
 	owWindow,
 	stateManagers,
@@ -132,6 +136,7 @@ async function init() {
 		mainWin.restore();
 
 	// noticeWin.restore();
+	
 }
 
 async function downloadsInit() {
@@ -243,6 +248,10 @@ async function gameLaunched(game) {
 
 	const mainWindowState = await mainWin.getWindowState();
 
+	var TEST = new Howl({
+		src: ['VoicePacks/Quake4Siege/explosive_efficiency.ogg']
+	  });
+
 	if ( mainWindowState.window_state !== 'closed' )
 		await mainWin.close();
 
@@ -250,6 +259,8 @@ async function gameLaunched(game) {
 		await updateUser();
 		await noticeWin.restore();
 	}
+
+	TEST.play();
 }
 
 async function gameEnded() {
@@ -323,9 +334,33 @@ function setFeatures() {
 	});
 }
 
+
+function onHurt(){
+	let vpEvent;
+	if(totalhealth2 !== totalhealth){
+		totalhealth2 = totalhealth;
+
+		if( totalhealth <= '99'){
+			vpEvent = 'hurtsmall';
+		}
+		else if( totalhealth <= '65' ){
+			vpEvent = 'hurtmed';
+		}
+		else if( totalhealth <= '45'){
+			vpEvent = 'hurtbig';
+		}
+		else if( totalhealth <= '1'){
+			vpEvent = '';
+		}
+
+		if ( vpEvent )
+		playVoice(vpEvent);
+	}	
+
+}
 function onInfoUpdate(i) {
 	// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
-	// console.log('onInfoUpdate():', i.info);
+	console.log('onInfoUpdate():', i.info);
 
 	if ( ! i || ! i.info ) {
 		console.warn('onInfoUpdate(): No info: '+ JSON.stringify(i));
@@ -337,13 +372,13 @@ function onInfoUpdate(i) {
 		game = state.get('gameRunning'),
 		isRainbowSix = (game.name === 'RainbowSix');
 
-	let vpEvent = null;
+	let vpEvent;
+	
 
-
-			if ( isRainbowSix && info.round && info.round.number === '2'){
+		if ( isRainbowSix && info.round && info.round.number === '2'){
 			//roundnum = 1;
 			vpEvent = 'roundone';
-			}
+		}
 		
 		else if ( isRainbowSix && info.round && info.round.number === '2')
 		{
@@ -360,6 +395,13 @@ function onInfoUpdate(i) {
 			//roundnum = 4;
 			vpEvent = 'roundfour';
 		}
+		
+		else if ( isRainbowSix && info.player && info.player.health !== '100'){
+			totalhealth = info.player.health;
+			setInterval(onHurt, 1000);
+		}
+
+
 		if ( vpEvent )
 	playVoice(vpEvent);
 	}
@@ -565,7 +607,8 @@ function onGameEvent(e) {
 		else if( eventName === 'death'){
 			killstreak = 0;
 			headshotnum = 0;
-			clearTimeout(hstimer); // here because dying within 200 ms of a kill will still play kill audio otherwise	
+			clearTimeout(hstimer);
+			clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise	
 			vpEvent = 'death';
 		}
 		else if( eventName === 'kill')
@@ -770,6 +813,8 @@ async function previewVP(id, game = 'CSGO', event = null) {
 	});
 }
 
+
+
 function playVoice(event) {
 	const game = state.get('gameRunning');
 
@@ -799,11 +844,31 @@ function playVoice(event) {
 		return false;
 	}
 
-	return audioPlayer.playTrack({
+
+	var audionew = new Howl({
+		src : track.path,
+		autoplay: true,	
+		preload : false,
+	});
+
+	audionew.volume = volume;
+	
+
+	/*var audionew = new Howl({
+		src : track,
+		volume,
+		autoplay: true,
+		preload : false,
+	});8*/
+	return audionew.load();
+	//return audionew.src(track);
+	/*return audioPlayer.playTrack({
 		src : track.path,
 		volume
-	});
+	});*/
 }
+
+
 
 init().catch(e => {
 	console.warn('init(): error: '+ e.message, e);
