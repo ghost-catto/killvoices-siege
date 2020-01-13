@@ -42,7 +42,7 @@ require([
 
 const { state, persState } = stateManagers;
 
-const { getRequest, delay } = utils;
+const { getRequest, delay, throttle } = utils;
 
 const
 	indexWin	= new owWindow('index'),
@@ -336,28 +336,26 @@ function setFeatures() {
 
 
 function onHurt(){
+	
 	let vpEvent;
 	if(totalhealth2 !== totalhealth){
 		totalhealth2 = totalhealth;
-
-		if( totalhealth <= '99'){
+		if( totalhealth <= '99' && totalhealth >= '66'){
 			vpEvent = 'hurtsmall';
 		}
-		else if( totalhealth <= '65' ){
+		else if( totalhealth <= '65' && totalhealth >= '46'){
 			vpEvent = 'hurtmed';
 		}
-		else if( totalhealth <= '45'){
+		else if( totalhealth <= '45' && totalhealth >= '2'){
 			vpEvent = 'hurtbig';
-		}
-		else if( totalhealth <= '1'){
-			vpEvent = '';
-		}
-
-		if ( vpEvent )
-		playVoice(vpEvent);
+		}	
 	}	
-
+	if ( vpEvent )
+		playVoice(vpEvent);
 }
+
+
+
 function onInfoUpdate(i) {
 	// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
 	console.log('onInfoUpdate():', i.info);
@@ -374,7 +372,6 @@ function onInfoUpdate(i) {
 
 	let vpEvent;
 	
-
 		if ( isRainbowSix && info.round && info.round.number === '2'){
 			//roundnum = 1;
 			vpEvent = 'roundone';
@@ -398,7 +395,7 @@ function onInfoUpdate(i) {
 		
 		else if ( isRainbowSix && info.player && info.player.health !== '100'){
 			totalhealth = info.player.health;
-			setInterval(onHurt, 1000);
+			limit = setTimeout(onHurt, 500);
 		}
 
 
