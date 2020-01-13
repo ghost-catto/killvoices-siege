@@ -366,38 +366,36 @@ function onInfoUpdate(i) {
 	
 	
 
-
+// IDK what the fuck i'm doing help me
+// delaying a seperate function if the kill event is risen
+//  and only fires if the headshot event is not risen within
+// 150 ms of kill event firing
 
 function onRainbowSixEvent() {	
-
-	let vpEvent;
-	vpEvent = holder;
 	
+	let vpEvent;
+
 	if( holder === 'kill')
 	{
-
 		++killstreak;
-		if( killstreak === 0 )
+		if( killstreak === 1 )
 		{
 			vpEvent = 'hitsnd';
-			headshotnum = 0;
-			playVoice(vpEvent);
 		}
 		else if( killstreak >= 2 ){
 			vpEvent = 'killstreaks';
-			headshotnum = 0;
-			playVoice(vpEvent);
 		}
 		else if ( killstreak >= 5 )
 		{
 			vpEvent = 'probhacking';
-			headshotnum = 0;
-			playVoice(vpEvent);
 		}
 		
 	}
 	
-	
+	if ( vpEvent ) {
+		console.log('onGameEvent(HOLDER):', vpEvent);
+		playVoice(vpEvent);
+	}
 	
 
 }
@@ -567,16 +565,17 @@ function onGameEvent(e) {
 		else if( eventName === 'death'){
 			killstreak = 0;
 			headshotnum = 0;
+			clearTimeout(hstimer); // here because dying within 200 ms of a kill will still play kill audio otherwise	
 			vpEvent = 'death';
 		}
 		else if( eventName === 'kill')
 		{
 			holder = 'kill';
-			hstimer = setTimeout(onRainbowSixEvent, 100, [holder, killstreak]);
+			hstimer = setTimeout(onRainbowSixEvent, 125, [vpEvent, holder, killstreak]);
 		}
 		else if ( eventName === 'headshot' ){
 			holder = 'headshot';
-			clearTimeout(hstimer);
+			clearTimeout(hstimer); // do not execute function holding code for normal kills
 			++headshotnum;
 			if ( headshotnum === 1){
 				vpEvent = 'headshot';
