@@ -9,6 +9,7 @@ var hurttimer;
 var killstreak = 0;
 var headshotnum = 0;
 var holder;
+var limit;
 require([
 	'libs/ow-window',
 	'libs/state',
@@ -339,6 +340,7 @@ function onHurt(){
 	
 	let vpEvent;
 	if(totalhealth2 !== totalhealth){
+		
 		totalhealth2 = totalhealth;
 		if( totalhealth <= '99' && totalhealth >= '66'){
 			vpEvent = 'hurtsmall';
@@ -348,10 +350,14 @@ function onHurt(){
 		}
 		else if( totalhealth <= '45' && totalhealth >= '2'){
 			vpEvent = 'hurtbig';
-		}	
-	}	
-	if ( vpEvent )
+		}
+		limit = setTimeout(onHurt, 500);
+	}
+	
+	if ( vpEvent ){
 		playVoice(vpEvent);
+		
+	}
 }
 
 
@@ -395,7 +401,8 @@ function onInfoUpdate(i) {
 		
 		else if ( isRainbowSix && info.player && info.player.health !== '100'){
 			totalhealth = info.player.health;
-			limit = setTimeout(onHurt, 500);
+			onHurt();
+			
 		}
 
 

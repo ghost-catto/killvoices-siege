@@ -52,7 +52,7 @@ define(() => [
 			twoheadshot: ["hstwo"],
 			threeheadshot: ["HS03"],
 			railgungod: ["rail", "perf3"],
-			death: ["death1","death2","death3","death4"],
+			death: ["death1","death2","death3"],
 			round_start: ["fight", "prepareto", "prepare_team"],
 			victory: ["tscore1"],
 			defeat: ["escore1"],
@@ -61,11 +61,12 @@ define(() => [
 			roundthree: ["comp2"],
 			roundfour: ["comp3"],
 			hurt: ["hitsnd"],
-			killstreaks: ["collat","bringthem","exec", "dom", "bers", "shadow"],
+			probhacking: ["collat","bringthem","exec"],
+			killstreaks: ["dom", "bers", "shadow"],
 			hurtsmall: ["sargepain"],
 			hurtmed: ["sargepain2"],
 			hurtbig: ["sargepain3"],
-			redleads: ["redleads"],
+			heal: ["healed"],
 			tied: ["tied"]
 		
 			
