@@ -7,7 +7,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
-var rndcharval = 2;
+var rndcharval = -1;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -275,7 +275,6 @@ require([
 		// an event triggered
 		overwolf.games.events.onInfoUpdates2.addListener(onInfoUpdate);
 		overwolf.games.events.onNewEvents.addListener(onGameEvent);
-		
 	}
 
 	function setFeatures() {
@@ -364,6 +363,7 @@ require([
 				onHurt();
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
 				rndcharval = getRandomInt(2);
+
 				if (rndcharval === 0) {
 					// BITTERMAN
 					vpEvent = "bitterman";
@@ -549,42 +549,23 @@ require([
 		}*/
 			if (eventName === 'roundStart') {
 				vpEvent = 'lowambient';
-				vpEvent = 'prepare';
-
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
 				killstreak = 0;
 				headshotnum = 0;
 			} else if (eventName === 'roundOutcome') {
-				if (event.data === 'victory') {
-				vpEvent = 'victory';
-					if(rndcharval === 1){
-						vpEvent = 'rangtaunt';
-					}
-					else if(rndcharval === 2){
-						vpEvent = 'visortaunt';
-					}
-				}
+				if (event.data === 'victory') vpEvent = 'victory';
 				else vpEvent = 'alert';
 			} else if (eventName === 'death') {
 				killstreak = 0;
 				headshotnum = 0;
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
-				if (rndcharval === 0){
-				vpEvent = 'bitdeath';
-				}
-				else if(rndcharval === 1){
-					vpEvent = 'doomdeath';
-				}
-				else if(rndcharval === 2){
-					vpEvent = 'razdeath';
-				}
-
+				vpEvent = 'death';
 			} else if (eventName === 'kill') {
 				holder = 'kill';
-				hstimer = setTimeout(onRainbowSixEvent, 235, [ vpEvent, holder, killstreak ]);
+				hstimer = setTimeout(onRainbowSixEvent, 125, [ vpEvent, holder, killstreak ]);
 			} else if (eventName === 'headshot') {
 				holder = 'headshot';
 				clearTimeout(hstimer); // do not execute function holding code for normal kills

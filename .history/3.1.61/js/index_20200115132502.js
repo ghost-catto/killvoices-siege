@@ -549,8 +549,6 @@ require([
 		}*/
 			if (eventName === 'roundStart') {
 				vpEvent = 'lowambient';
-				vpEvent = 'prepare';
-
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
@@ -584,7 +582,7 @@ require([
 
 			} else if (eventName === 'kill') {
 				holder = 'kill';
-				hstimer = setTimeout(onRainbowSixEvent, 235, [ vpEvent, holder, killstreak ]);
+				hstimer = setTimeout(onRainbowSixEvent, 125, [ vpEvent, holder, killstreak ]);
 			} else if (eventName === 'headshot') {
 				holder = 'headshot';
 				clearTimeout(hstimer); // do not execute function holding code for normal kills
