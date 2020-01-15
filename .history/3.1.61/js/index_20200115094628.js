@@ -7,7 +7,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
-var rndcharval = -1;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -279,7 +279,7 @@ require([
 
 	function setFeatures() {
 		clearTimeout(setFeaturesRetryTimeout);
-
+		vpEvent = 'alert';
 		// register the requested ('required') features
 		overwolf.games.events.setRequiredFeatures(appConfig.gameFeatures, function(info) {
 			if (info.status == 'error') {
@@ -297,30 +297,12 @@ require([
 		let vpEvent;
 		if (totalhealth2 !== totalhealth) {
 			totalhealth2 = totalhealth;
-			if (rndcharval === 0) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'bithurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'bithurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'bithurtlarge';
-				}
-			} else if (rndcharval === 1) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'doomhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'doomhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'doomhurtlarge';
-				}
-			} else if (rndcharval === 2) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'razhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'razhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'razhurtlarge';
-				}
+			if (totalhealth <= '99' && totalhealth >= '66') {
+				vpEvent = 'sarhurtsmall';
+			} else if (totalhealth <= '65' && totalhealth >= '46') {
+				vpEvent = 'sarhurtmed';
+			} else if (totalhealth <= '45' && totalhealth >= '2') {
+				vpEvent = 'sarhurtbig';
 			}
 			//hurtdelay;
 		}
@@ -344,11 +326,15 @@ require([
 			isRainbowSix = game.name === 'RainbowSix';
 
 		let vpEvent;
+		
+		if (rndcharval === -1) {
+			rndcharval = getRandomInt(6);
+		}
 
 		if (isRainbowSix) {
 			if (info.round && info.round.number === '2') {
 				//roundnum = 1;
-				vpEvent = 'prepare';
+				vpEvent = 'roundone';
 			} else if (info.round && info.round.number === '2') {
 				//roundnum = 2;
 				vpEvent = 'roundtwo';
@@ -362,20 +348,13 @@ require([
 				totalhealth = info.player.health;
 				onHurt();
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
-				if (rndcharval === -1) {
-					rndcharval = getRandomInt(2);
-				}
-
 				if (rndcharval === 0) {
 					// BITTERMAN
-					vpEvent = "bitterman";
 				} else if (rndcharval === 1) {
 					// DOOM
-					vpEvent = "doom";
 				} else if (rndcharval === 2) {
 					// RAZOR
-					vpEvent = "razor";
-				} /*else if (rndcharval === 3) {
+				} else if (rndcharval === 3) {
 					// sARGE
 				} else if (rndcharval === 4) {
 					// VISOR
@@ -383,7 +362,7 @@ require([
 					// GRUNT
 				} else if (rndcharval === 6) {
 					// RANGER
-				}*/
+				}
 
 				if (vpEvent) playVoice(vpEvent);
 			}
@@ -401,7 +380,7 @@ require([
 		if (holder === 'kill') {
 			++killstreak;
 			if (killstreak === 1) {
-				vpEvent = 'killstreaks';
+				vpEvent = 'hitsnd';
 			} else if (killstreak >= 2) {
 				vpEvent = 'killstreaks';
 			} else if (killstreak >= 5) {
@@ -549,8 +528,9 @@ require([
 			if(eventName === 'kill') { break; }
 				onRainbowSixEvent(e.events[i]);
 		}*/
+
 			if (eventName === 'roundStart') {
-				vpEvent = 'lowambient';
+				vpEvent = 'round_start';
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
@@ -558,7 +538,7 @@ require([
 				headshotnum = 0;
 			} else if (eventName === 'roundOutcome') {
 				if (event.data === 'victory') vpEvent = 'victory';
-				else vpEvent = 'alert';
+				else vpEvent = 'defeat';
 			} else if (eventName === 'death') {
 				killstreak = 0;
 				headshotnum = 0;

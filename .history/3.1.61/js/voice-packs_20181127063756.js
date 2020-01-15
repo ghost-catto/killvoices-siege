@@ -356,7 +356,7 @@ class voicePack {
 				track = findRandom();
 		}
 
-		let path = this.id +'/'+ track;
+		let path = this.id +'/'+ track +'.ogg';
 
 		if ( this.origin === 'documents' )
 			path = handler.paths.downloaded + path;
@@ -414,7 +414,7 @@ class voicePack {
 				track = findRandom();
 		}
 
-		let path = this.id +'/'+ track;
+		let path = this.id +'/'+ track +'.ogg';
 
 		if ( this.origin === 'documents' )
 			path = handler.paths.downloaded + path;

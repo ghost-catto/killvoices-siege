@@ -8,9 +8,9 @@ define(() => [
 		acquiredBy: 'preinstall',
 
 		RainbowSix: {
-			headshot: [ 'sounds/headshot/prescice.wav', 'sounds/headshot/headshot.wav' ],
+			headshot: [ 'headshot' ],
 			twoheadshot: [ 'sounds/headshot/2rails.ogg' ],
-			threeheadshot: [ 'sounds/headshot/3rails.ogg' ],
+			threeheadshot: [ 'sounds/headshot/HS03.ogg' ],
 			railgungod: [ 'sounds/headshot/railgod.ogg' ],
 
 			sargedeath: [ 'sounds/sarge/death2.wav', 'sounds/sarge/death1.wav', 'sounds/sarge/death3.wav' ],
@@ -41,34 +41,29 @@ define(() => [
 			grunhurtlarge: ['sounds/grunt/pain25_1.wav'],
 
 			rangdeath: ['sounds/ranger/death1.wav','sounds/ranger/death2.wav','sounds/ranger/death3.wav'],
-			rangtaunt: ['sounds/ranger/taunt.wav'],
-			ranghurtsmall: ['sounds/ranger/pain100_1.wav'],
-			ranghurtmed: ['sounds/ranger/pain75_1.wav'],
-			ranghurtlarge: ['sounds/ranger/pain25_1.wav'],
+			rangtaunt: [],
+			ranghurtsmall: [],
+			ranghurtmed: [],
+			ranghurtlarge: [],
 
-			visordeath: ['sounds/visor/death1.wav','sounds/visor/death2.wav','sounds/visor/death3.wav'],
-			visortaunt: ['sounds/visor/taunt.wav'],
-			visorhurtsmall: ['sounds/visor/pain100_1.wav'],
-			visorhurtmed: ['sounds/visor/pain50_1.wav'],
-			visorhurtlarge: ['sounds/visor/pain25_1.wav'],
+			visordeath: [],
+			visortaunt: [],
+			visorhurtsmall: [],
+			visorhurtmed: [],
+			visorhurtlarge: [],
 
-			round_start: [ 'sounds/teamplay/prepareyour.wav', 'sounds/teamplay/fight.wav' ],
-			victory: [ 'sounds/rounds/tscore1.ogg' ],
-			defeat: [ 'sounds/rounds/escore1.ogg' ],
-			prepare: [ 'sounds/rounds/preparetofight.ogg' ],
-			roundtwo: [ 'sounds/rounds/comp1.ogg' ],
-			roundthree: [ 'sounds/rounds/comp2.ogg' ],
-			roundfour: [ 'sounds/rounds/comp3.ogg' ],
-
-			bitterman: [ 'sounds/bitter/Bitterman.wav'],
-			doom: [ 'sounds/doom/Doom.wav'],
-			razor: [ 'sounds/razor/Razor.wav'],
+			round_start: [ 'fight', 'prepareto', 'prepare_team' ],
+			victory: [ 'tscore1' ],
+			defeat: [ 'escore1' ],
+			roundone: [ 'comp0' ],
+			roundtwo: [ 'comp1' ],
+			roundthree: [ 'comp2' ],
+			roundfour: [ 'comp3' ],
 
 			alert: ['sounds/teamplay/alert.wav'],
-			lowambient: ['sounds/ambient/1shot_gong.wav','sounds/ambient/1shot_greg_01.wav','sounds/ambient/1shot_greg_03.wav'],
 
-			probhacking: [ 'sounds/kills/collat.wav', 'sounds/kills/impre.wav', 'sounds/kills/holy.wav', 'sounds/kills/rage.wav' ],
-			killstreaks: [ 'sounds/kills/shad.wav', 'sounds/kills/evas.wav', 'sounds/kills/merci.wav' ]
+			probhacking: [ 'collat', 'bringthem', 'exec' ],
+			killstreaks: [ 'dom', 'bers', 'shadow' ]
 		}
 	}
 ]);

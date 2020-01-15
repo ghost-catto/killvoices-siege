@@ -7,7 +7,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
-var rndcharval = -1;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -368,14 +368,11 @@ require([
 
 				if (rndcharval === 0) {
 					// BITTERMAN
-					vpEvent = "bitterman";
 				} else if (rndcharval === 1) {
 					// DOOM
-					vpEvent = "doom";
 				} else if (rndcharval === 2) {
 					// RAZOR
-					vpEvent = "razor";
-				} /*else if (rndcharval === 3) {
+				} else if (rndcharval === 3) {
 					// sARGE
 				} else if (rndcharval === 4) {
 					// VISOR
@@ -383,7 +380,7 @@ require([
 					// GRUNT
 				} else if (rndcharval === 6) {
 					// RANGER
-				}*/
+				}
 
 				if (vpEvent) playVoice(vpEvent);
 			}
@@ -401,7 +398,7 @@ require([
 		if (holder === 'kill') {
 			++killstreak;
 			if (killstreak === 1) {
-				vpEvent = 'killstreaks';
+				vpEvent = 'hitsnd';
 			} else if (killstreak >= 2) {
 				vpEvent = 'killstreaks';
 			} else if (killstreak >= 5) {
@@ -550,7 +547,7 @@ require([
 				onRainbowSixEvent(e.events[i]);
 		}*/
 			if (eventName === 'roundStart') {
-				vpEvent = 'lowambient';
+				vpEvent = 'round_start';
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
@@ -558,7 +555,7 @@ require([
 				headshotnum = 0;
 			} else if (eventName === 'roundOutcome') {
 				if (event.data === 'victory') vpEvent = 'victory';
-				else vpEvent = 'alert';
+				else vpEvent = 'defeat';
 			} else if (eventName === 'death') {
 				killstreak = 0;
 				headshotnum = 0;

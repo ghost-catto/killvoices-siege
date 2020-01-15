@@ -7,7 +7,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
-var rndcharval = -1;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -401,7 +401,7 @@ require([
 		if (holder === 'kill') {
 			++killstreak;
 			if (killstreak === 1) {
-				vpEvent = 'killstreaks';
+				vpEvent = 'hitsnd';
 			} else if (killstreak >= 2) {
 				vpEvent = 'killstreaks';
 			} else if (killstreak >= 5) {

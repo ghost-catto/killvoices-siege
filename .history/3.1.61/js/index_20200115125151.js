@@ -7,7 +7,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
-var rndcharval = -1;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;

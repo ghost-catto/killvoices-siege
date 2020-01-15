@@ -60,10 +60,6 @@ define(() => [
 			roundthree: [ 'sounds/rounds/comp2.ogg' ],
 			roundfour: [ 'sounds/rounds/comp3.ogg' ],
 
-			bitterman: [ 'sounds/bitter/Bitterman.wav'],
-			doom: [ 'sounds/doom/Doom.wav'],
-			razor: [ 'sounds/razor/Razor.wav'],
-
 			alert: ['sounds/teamplay/alert.wav'],
 			lowambient: ['sounds/ambient/1shot_gong.wav','sounds/ambient/1shot_greg_01.wav','sounds/ambient/1shot_greg_03.wav'],
 

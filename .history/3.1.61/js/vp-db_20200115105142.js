@@ -52,17 +52,13 @@ define(() => [
 			visorhurtmed: ['sounds/visor/pain50_1.wav'],
 			visorhurtlarge: ['sounds/visor/pain25_1.wav'],
 
-			round_start: [ 'sounds/teamplay/prepareyour.wav', 'sounds/teamplay/fight.wav' ],
+			round_start: [ 'fight', 'prepareto', 'prepare_team' ],
 			victory: [ 'sounds/rounds/tscore1.ogg' ],
 			defeat: [ 'sounds/rounds/escore1.ogg' ],
 			prepare: [ 'sounds/rounds/preparetofight.ogg' ],
 			roundtwo: [ 'sounds/rounds/comp1.ogg' ],
 			roundthree: [ 'sounds/rounds/comp2.ogg' ],
 			roundfour: [ 'sounds/rounds/comp3.ogg' ],
-
-			bitterman: [ 'sounds/bitter/Bitterman.wav'],
-			doom: [ 'sounds/doom/Doom.wav'],
-			razor: [ 'sounds/razor/Razor.wav'],
 
 			alert: ['sounds/teamplay/alert.wav'],
 			lowambient: ['sounds/ambient/1shot_gong.wav','sounds/ambient/1shot_greg_01.wav','sounds/ambient/1shot_greg_03.wav'],
