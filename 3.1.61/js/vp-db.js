@@ -49,10 +49,21 @@ define(() => [
 	
 		RainbowSix: {
 			headshot: ["headshot"],
-			twoheadshot: ["hstwo"],
-			threeheadshot: ["HS03"],
+			twoheadshot: ["headshot/2rails"],
+			threeheadshot: ["headshot/HS03"],
 			railgungod: ["rail", "perf3"],
-			death: ["death1","death2","death3"],
+
+			sargedeath: ["sarge/sardeath1","sarge/sardeath2","sarge/sardeath3"],
+			sarhurtsmall: ["sarge/sargepain"],
+			sarhurtmed: ["sarge/sargepain2"],
+			sarhurtbig: ["sarge/sargepain3"],
+			bitdeath: [],
+			bithurtsmall: [],
+			bithurtmed: [],
+			bithurtlarge: [],
+
+
+
 			round_start: ["fight", "prepareto", "prepare_team"],
 			victory: ["tscore1"],
 			defeat: ["escore1"],
@@ -60,14 +71,9 @@ define(() => [
 			roundtwo: ["comp1"],
 			roundthree: ["comp2"],
 			roundfour: ["comp3"],
-			hurt: ["hitsnd"],
+
 			probhacking: ["collat","bringthem","exec"],
 			killstreaks: ["dom", "bers", "shadow"],
-			hurtsmall: ["sargepain"],
-			hurtmed: ["sargepain2"],
-			hurtbig: ["sargepain3"],
-			heal: ["healed"],
-			tied: ["tied"]
 		
 			
 		},

@@ -333,5 +333,6 @@ define({
 		'RoundStart',
 		'MatchEnd',
 		'match_state',
+		'game_info'
 	]
 });

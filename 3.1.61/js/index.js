@@ -4,6 +4,7 @@ require.config({
 });
 var hstimer;
 var totalhealth;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -206,6 +207,10 @@ function updateAppManifest() { return new Promise(resolve => {
 	});
 })}
 
+function getRandomInt(max) {
+	return Math.floor(Math.random() * Math.floor(max));
+  }
+
 async function updateUser() {
 	if ( ! userInfo )
 		userInfo = await new Promise(resolve => overwolf.profile.getCurrentUser(resolve));
@@ -250,7 +255,8 @@ async function gameLaunched(game) {
 	const mainWindowState = await mainWin.getWindowState();
 
 	var TEST = new Howl({
-		src: ['VoicePacks/Quake4Siege/explosive_efficiency.ogg']
+		src: ['VoicePacks/Quake4Siege/intro_01.wav'],
+		volume: 0.05,
 	  });
 
 	if ( mainWindowState.window_state !== 'closed' )
@@ -343,13 +349,13 @@ function onHurt(){
 		
 		totalhealth2 = totalhealth;
 		if( totalhealth <= '99' && totalhealth >= '66'){
-			vpEvent = 'hurtsmall';
+			vpEvent = 'sarhurtsmall';
 		}
 		else if( totalhealth <= '65' && totalhealth >= '46'){
-			vpEvent = 'hurtmed';
+			vpEvent = 'sarhurtmed';
 		}
 		else if( totalhealth <= '45' && totalhealth >= '2'){
-			vpEvent = 'hurtbig';
+			vpEvent = 'sarhurtbig';
 		}
 		limit = setTimeout(onHurt, 500);
 	}
@@ -377,40 +383,74 @@ function onInfoUpdate(i) {
 		isRainbowSix = (game.name === 'RainbowSix');
 
 	let vpEvent;
-	
-		if ( isRainbowSix && info.round && info.round.number === '2'){
+
+	if( rndcharval === -1){
+		rndcharval = getRandomInt(6);
+	}
+
+		if( isRainbowSix){
+
+		if ( info.round && info.round.number === '2'){
 			//roundnum = 1;
 			vpEvent = 'roundone';
 		}
 		
-		else if ( isRainbowSix && info.round && info.round.number === '2')
+		else if ( info.round && info.round.number === '2')
 		{
 			//roundnum = 2;
 			vpEvent = 'roundtwo';
 		}
-		else if ( isRainbowSix && info.round && info.round.number === '3' )
+		else if ( info.round && info.round.number === '3' )
 		{
 			//roundnum = 3;
 			vpEvent = 'roundthree';
 		}
-		else if ( isRainbowSix && info.round && info.round.number === '4' )
+		else if ( info.round && info.round.number === '4' )
 		{
 			//roundnum = 4;
 			vpEvent = 'roundfour';
 		}
 		
-		else if ( isRainbowSix && info.player && info.player.health !== '100'){
+		else if ( info.player && info.player.health !== '100'){
 			totalhealth = info.player.health;
 			onHurt();
 			
 		}
 
+		else if ( info.game_info && info.game_info.phase === 'operator_select'){
+			
+
+			if( rndcharval === 0){ // BITTERMAN			
+
+			}
+			else if( rndcharval === 1 ){ // DOOM
+
+			}
+			else if( rndcharval === 2 ){ // RAZOR
+
+			}
+			else if( rndcharval === 3 ){ // sARGE
+
+			}
+			else if( rndcharval === 4 ){ // VISOR
+
+			}
+			else if( rndcharval === 5 ){ // GRUNT
+
+			}
+			else if( rndcharval === 6 ){ // RANGER
+
+			}
+
+		
+
 
 		if ( vpEvent )
 	playVoice(vpEvent);
-	}
-	
-	
+}
+}
+}
+
 
 // IDK what the fuck i'm doing help me
 // delaying a seperate function if the kill event is risen
@@ -856,7 +896,9 @@ function playVoice(event) {
 	});
 
 	audionew.volume = volume;
-	
+	let trackid = audionew.play();
+
+	console.log(`playVoice() :` + track.path + " " + trackid); 
 
 	/*var audionew = new Howl({
 		src : track,
