@@ -563,11 +563,11 @@ require([
 			} else if (eventName === 'roundOutcome') {
 				if (event.data === 'victory') {
 					vpEvent = 'victory';
-					if (rndcharval === 1) {
+					/*if (rndcharval === 1) {
 						vpEvent2 = 'rangtaunt';
 					} else if (rndcharval === 2) {
 						vpEvent2 = 'visortaunt';
-					}
+					}*/
 				} else vpEvent = 'alert';
 			} else if (eventName === 'death') {
 				killstreak = 0;
@@ -809,10 +809,11 @@ require([
 		
 		var audionew = new Howl({
 			src: track.path,
-			volume: 0.3,
+			volume: 0.03,
 			autoplay: false,
 			preload: false,
 			onload: function() {
+				audionew.volume = 0.03;              
 				trackid = audionew.play();
 				trackholder.push(trackid);
 				console.log(trackid);
