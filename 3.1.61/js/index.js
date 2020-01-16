@@ -5,7 +5,9 @@ require.config({
 	baseUrl: 'js/',
 	waitSeconds: 0
 });
+
 var hstimer;
+var audiohandle;
 var totalhealth;
 var rndcharval = 2;
 var totalhealth2;
@@ -14,6 +16,9 @@ var killstreak = 0;
 var headshotnum = 0;
 var holder;
 var limit;
+var durationaudio;
+var trackid;
+
 require([
 	'libs/ow-window',
 	'libs/state',
@@ -275,7 +280,6 @@ require([
 		// an event triggered
 		overwolf.games.events.onInfoUpdates2.addListener(onInfoUpdate);
 		overwolf.games.events.onNewEvents.addListener(onGameEvent);
-		
 	}
 
 	function setFeatures() {
@@ -366,13 +370,13 @@ require([
 				rndcharval = getRandomInt(2);
 				if (rndcharval === 0) {
 					// BITTERMAN
-					vpEvent = "bitterman";
+					vpEvent = 'bitterman';
 				} else if (rndcharval === 1) {
 					// DOOM
-					vpEvent = "doom";
+					vpEvent = 'doom';
 				} else if (rndcharval === 2) {
 					// RAZOR
-					vpEvent = "razor";
+					vpEvent = 'razor';
 				} /*else if (rndcharval === 3) {
 					// sARGE
 				} else if (rndcharval === 4) {
@@ -436,6 +440,7 @@ require([
 			isApex = gameName === 'Apex';
 
 		let vpEvent;
+		let vpEvent2;
 
 		if (isSplitgate) {
 			for (let i = 0; i < e.events.length; i++) {
@@ -549,8 +554,7 @@ require([
 		}*/
 			if (eventName === 'roundStart') {
 				vpEvent = 'lowambient';
-				vpEvent = 'prepare';
-
+				vpEvent2 = 'prepare';
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
@@ -558,30 +562,25 @@ require([
 				headshotnum = 0;
 			} else if (eventName === 'roundOutcome') {
 				if (event.data === 'victory') {
-				vpEvent = 'victory';
-					if(rndcharval === 1){
-						vpEvent = 'rangtaunt';
+					vpEvent = 'victory';
+					if (rndcharval === 1) {
+						vpEvent2 = 'rangtaunt';
+					} else if (rndcharval === 2) {
+						vpEvent2 = 'visortaunt';
 					}
-					else if(rndcharval === 2){
-						vpEvent = 'visortaunt';
-					}
-				}
-				else vpEvent = 'alert';
+				} else vpEvent = 'alert';
 			} else if (eventName === 'death') {
 				killstreak = 0;
 				headshotnum = 0;
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
-				if (rndcharval === 0){
-				vpEvent = 'bitdeath';
-				}
-				else if(rndcharval === 1){
+				if (rndcharval === 0) {
+					vpEvent = 'bitdeath';
+				} else if (rndcharval === 1) {
 					vpEvent = 'doomdeath';
-				}
-				else if(rndcharval === 2){
+				} else if (rndcharval === 2) {
 					vpEvent = 'razdeath';
 				}
-
 			} else if (eventName === 'kill') {
 				holder = 'kill';
 				hstimer = setTimeout(onRainbowSixEvent, 235, [ vpEvent, holder, killstreak ]);
@@ -607,6 +606,11 @@ require([
 		if (vpEvent) {
 			console.log('onGameEvent():', vpEvent);
 			playVoice(vpEvent);
+			
+		}
+		if (vpEvent2) {
+			console.log('onGameEvent2():', vpEvent2);
+			playVoice(vpEvent2);
 		}
 	}
 
@@ -773,7 +777,7 @@ require([
 		});
 	}
 
-	function playVoice(event) {
+	function playVoice(event, event2) {
 		const game = state.get('gameRunning');
 
 		if (!game) return false;
@@ -799,29 +803,30 @@ require([
 			return false;
 		}
 
+		let trackholder = [];
+		let fileplay;
+
 		var audionew = new Howl({
 			src: track.path,
-			autoplay: true,
-			preload: false
+			autoplay: false,
+			preload: false,
+			onload: function() {
+				trackid = audionew.play();
+				trackholder.push(trackid);
+				console.log(trackid);
+				if (audionew.playing()) {
+					audionew.stop([ trackid ]);
+				} else {
+					fileplay = trackholder.shift();
+					audionew.play([ fileplay ]);
+				}
+			},
+			onend: function() {
+				if (trackholder.length > 0) audionew.play(trackholder.shift());
+			}
 		});
 
-		audionew.volume = volume;
-		let trackid = audionew.play();
-
-		console.log(`playVoice() :` + track.path + ' ' + trackid);
-
-		/*var audionew = new Howl({
-		src : track,
-		volume,
-		autoplay: true,
-		preload : false,
-	});8*/
 		return audionew.load();
-		//return audionew.src(track);
-		/*return audioPlayer.playTrack({
-		src : track.path,
-		volume
-	});*/
 	}
 
 	init().catch((e) => {
