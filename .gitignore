@@ -2,7 +2,6 @@
 3.1.61/plugins/
 node_modules/
 .vscode/
-.vscode/
 .history/
 .eslintrc.js
 package-lock.json
