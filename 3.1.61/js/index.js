@@ -809,6 +809,7 @@ require([
 		
 		var audionew = new Howl({
 			src: track.path,
+			volume: 0.5,
 			autoplay: false,
 			preload: false,
 			onload: function() {
