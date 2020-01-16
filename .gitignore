@@ -1,11 +1,9 @@
 
-3.1.61/plugins/nsis7z.dll
-3.1.61/plugins/nsis7z64.dll
-3.1.61/plugins/OverwolfDownloader.dll
-3.1.61/plugins/OverwolfDownloader64.dll
+3.1.61/plugins/
 node_modules/
-.vscode/launch.json
-.vscode/settings.json
+.vscode/
+.vscode/
+.history/
 .eslintrc.js
 package-lock.json
 package.json
