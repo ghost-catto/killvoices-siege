@@ -344,19 +344,19 @@ require([
 				}
 			} else if (rndcharval === 5) {
 				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'grunthurtsmall';
+					vpEvent = 'grunhurtsmall';
 				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'grunthurtmed';
+					vpEvent = 'grunhurtmed';
 				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'grunthurtlarge';
+					vpEvent = 'grunhurtlarge';
 				}
 			} else if (rndcharval === 6) {
 				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'rangehurtsmall';
+					vpEvent = 'ranghurtsmall';
 				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'rangehurtmed';
+					vpEvent = 'ranghurtmed';
 				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'rangehurtlarge';
+					vpEvent = 'ranghurtlarge';
 				}
 			}
 
@@ -611,6 +611,14 @@ require([
 					vpEvent = 'doomdeath';
 				} else if (rndcharval === 2) {
 					vpEvent = 'razdeath';
+				} else if (rndcharval === 3){
+					vpEvent = 'sargedeath';
+				} else if (rndcharval === 4){
+					vpEvent = 'visordeath';
+				} else if (rndcharval === 5){
+					vpEvent = 'grundeath';    
+				} else if (rndcharval === 6){
+					vpEvent = 'rangdeath';
 				}
 			} else if (eventName === 'kill') {
 				holder = 'kill';
