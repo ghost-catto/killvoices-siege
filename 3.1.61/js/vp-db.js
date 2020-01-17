@@ -63,6 +63,11 @@ define(() => [
 			bitterman: [ 'sounds/bitter/Bitterman.wav'],
 			doom: [ 'sounds/doom/Doom.wav'],
 			razor: [ 'sounds/razor/Razor.wav'],
+			ranger: [ 'sounds/ranger/Ranger.wav'],
+			sarge: [ 'sounds/sarge/Sarge.wav'],
+			visor: ['sounds/visor/Visor.wav'],
+			grunt: ['sounds/grunt/Grunt.wav'],
+
 
 			alert: ['sounds/teamplay/alert.wav'],
 			lowambient: ['sounds/ambient/1shot_gong.wav','sounds/ambient/1shot_greg_01.wav','sounds/ambient/1shot_greg_03.wav'],

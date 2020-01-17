@@ -9,7 +9,7 @@ require.config({
 var hstimer;
 var audiohandle;
 var totalhealth;
-var rndcharval = 2;
+var rndcharval;
 var totalhealth2;
 var hurttimer;
 var killstreak = 0;
@@ -326,12 +326,43 @@ require([
 				} else if (totalhealth <= '45' && totalhealth >= '2') {
 					vpEvent = 'razhurtlarge';
 				}
+			} else if (rndcharval === 3) {
+				if (totalhealth <= '99' && totalhealth >= '66') {
+					vpEvent = 'sarhurtsmall';
+				} else if (totalhealth <= '65' && totalhealth >= '46') {
+					vpEvent = 'sarhurtmed';
+				} else if (totalhealth <= '45' && totalhealth >= '2') {
+					vpEvent = 'sarhurtlarge';
+				}
+			} else if (rndcharval === 4) {
+				if (totalhealth <= '99' && totalhealth >= '66') {
+					vpEvent = 'visorhurtsmall';
+				} else if (totalhealth <= '65' && totalhealth >= '46') {
+					vpEvent = 'visorhurtmed';
+				} else if (totalhealth <= '45' && totalhealth >= '2') {
+					vpEvent = 'visorhurtlarge';
+				}
+			} else if (rndcharval === 5) {
+				if (totalhealth <= '99' && totalhealth >= '66') {
+					vpEvent = 'grunthurtsmall';
+				} else if (totalhealth <= '65' && totalhealth >= '46') {
+					vpEvent = 'grunthurtmed';
+				} else if (totalhealth <= '45' && totalhealth >= '2') {
+					vpEvent = 'grunthurtlarge';
+				}
+			} else if (rndcharval === 6) {
+				if (totalhealth <= '99' && totalhealth >= '66') {
+					vpEvent = 'rangehurtsmall';
+				} else if (totalhealth <= '65' && totalhealth >= '46') {
+					vpEvent = 'rangehurtmed';
+				} else if (totalhealth <= '45' && totalhealth >= '2') {
+					vpEvent = 'rangehurtlarge';
+				}
 			}
-			//hurtdelay;
-		}
 
-		if (vpEvent) {
-			playVoice(vpEvent);
+			if (vpEvent) {
+				playVoice(vpEvent);
+			}
 		}
 	}
 
@@ -367,7 +398,7 @@ require([
 				totalhealth = info.player.health;
 				onHurt();
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
-				rndcharval = getRandomInt(2);
+				rndcharval = getRandomInt(6);
 				if (rndcharval === 0) {
 					// BITTERMAN
 					vpEvent = 'bitterman';
@@ -377,15 +408,15 @@ require([
 				} else if (rndcharval === 2) {
 					// RAZOR
 					vpEvent = 'razor';
-				} /*else if (rndcharval === 3) {
-					// sARGE
+				} else if (rndcharval === 3) {
+					vpEvent = 'sarge';
 				} else if (rndcharval === 4) {
-					// VISOR
+					vpEvent = 'visor';
 				} else if (rndcharval === 5) {
-					// GRUNT
+					vpEvent = 'grunt';
 				} else if (rndcharval === 6) {
-					// RANGER
-				}*/
+					vpEvent = 'ranger';
+				}
 
 				if (vpEvent) playVoice(vpEvent);
 			}
@@ -606,7 +637,6 @@ require([
 		if (vpEvent) {
 			console.log('onGameEvent():', vpEvent);
 			playVoice(vpEvent);
-			
 		}
 		if (vpEvent2) {
 			console.log('onGameEvent2():', vpEvent2);
@@ -806,14 +836,13 @@ require([
 		let trackholder = [];
 		let fileplay;
 		// TODO: fix audio queues
-		
+
 		var audionew = new Howl({
 			src: track.path,
-			volume: 0.03,
 			autoplay: false,
 			preload: false,
 			onload: function() {
-				audionew.volume = 0.03;              
+				audionew.volume = 0.45;
 				trackid = audionew.play();
 				trackholder.push(trackid);
 				console.log(trackid);
