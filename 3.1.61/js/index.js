@@ -13,8 +13,10 @@ var killstreak = 0;
 var headshotnum = 0;
 var holder;
 var limit;
+var totalhealth;
 var durationaudio;
 var trackid;
+var scene;
 require([
 	'libs/ow-window',
 	'libs/state',
