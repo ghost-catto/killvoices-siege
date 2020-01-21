@@ -302,10 +302,8 @@ require([
 
 	function onHurt() {
 		let vpEvent;
-		if (totalhealth2 !== totalhealth) {
-			totalhealth2 = totalhealth;
-				vpEvent = 'hurt';
-			}
+				
+		vpEvent = 'hurt';
 
 			if (vpEvent) {
 				playVoice(vpEvent);
@@ -319,14 +317,7 @@ require([
 				playVoice(vpEvent);
 			}
 		}
-
-		function onScore(){
-			let vpEvent;
-			let realScore;
-			let oldScore;
-
-			realScore = info.player.score;
-		}
+		
 
 	function onInfoUpdate(i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
@@ -346,7 +337,7 @@ require([
 			 if (info.player && info.player.health < '100') {
 				totalhealth = info.player.health;
 				onHurt();
-				_.throttle(onHurt, 800);
+				//_.throttle(onHurt, 800);
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
 				scene = 'opselect';
 				vpEvent = 'introop';
@@ -732,7 +723,7 @@ require([
 					val: false
 				});
 				await delay(50);
-			}
+			}	
 		});
 	}
 
