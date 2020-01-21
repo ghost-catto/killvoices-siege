@@ -8,9 +8,6 @@ require.config({
 
 var hstimer;
 var audiohandle;
-var totalhealth;
-var rndcharval;
-var totalhealth2;
 var hurttimer;
 var killstreak = 0;
 var headshotnum = 0;
@@ -18,9 +15,6 @@ var holder;
 var limit;
 var durationaudio;
 var trackid;
-var score;
-var score2;
-var scene;
 require([
 	'libs/ow-window',
 	'libs/state',
@@ -185,10 +179,6 @@ require([
 		});
 	}
 
-	function getRandomInt(max) {
-		return Math.floor(Math.random() * Math.floor(max));
-	}
-
 	async function updateUser() {
 		if (!userInfo) userInfo = await new Promise((resolve) => overwolf.profile.getCurrentUser(resolve));
 
@@ -302,22 +292,21 @@ require([
 
 	function onHurt() {
 		let vpEvent;
-				
+
 		vpEvent = 'hurt';
 
-			if (vpEvent) {
-				playVoice(vpEvent);
-			}
+		if (vpEvent) {
+			playVoice(vpEvent);
 		}
+	}
 
-		function onKill(){
-			let vpEvent;
-			vpEvent = 'kills';
-			if (vpEvent) {
-				playVoice(vpEvent);
-			}
+	function onKill() {
+		let vpEvent;
+		vpEvent = 'kills';
+		if (vpEvent) {
+			playVoice(vpEvent);
 		}
-		
+	}
 
 	function onInfoUpdate(i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
@@ -334,7 +323,7 @@ require([
 
 		let vpEvent;
 		if (isRainbowSix) {
-			 if (info.player && info.player.health < '100') {
+			if (info.player && info.player.health < '100') {
 				totalhealth = info.player.health;
 				onHurt();
 				//_.throttle(onHurt, 800);
@@ -342,24 +331,14 @@ require([
 				scene = 'opselect';
 				vpEvent = 'introop';
 				if (vpEvent) playVoice(vpEvent);
-			}else if (info.player && info.player.score !== 0) {
+			} /*8else if (info.player && info.player.score !== 0) {
 				score = info.player.score;
-				
-					if(score - score2 == 10){
-						
 
-						
-						
-						console.log(score2);
-							
-					}
-					score2 = score;
-					
-					
-					
-			}
-			
-		
+				if (score - score2 == 10) {
+					console.log(score2);
+				}
+				score2 = score;88*/
+			//}
 		}
 	}
 
@@ -545,10 +524,9 @@ require([
 				vpEvent = 'death';
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
-				
 			} else if (eventName === 'kill') {
 				onKill();
-			} 
+			}
 		} else {
 			// Normal event
 			vpEvent = eventName; // This is the name of the event that was triggered
@@ -723,11 +701,11 @@ require([
 					val: false
 				});
 				await delay(50);
-			}	
+			}
 		});
 	}
 
-	function playVoice(event, event2) {
+	function playVoice(event) {
 		const game = state.get('gameRunning');
 
 		if (!game) return false;
@@ -737,7 +715,7 @@ require([
 			return false;
 		}
 
-		const id = vph.selectedVPs[game.name] || appConfig.defaultVP,
+		const id = appConfig.defaultVP,
 			vp = vph.get(id);
 
 		if (vp.type === 'custom' && vp.game !== game.name) {
