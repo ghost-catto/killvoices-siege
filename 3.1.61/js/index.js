@@ -310,10 +310,10 @@ require([
 
 		let vpEvent;
 		if (isRainbowSix) {
-			if (info.player && info.player.health !== '100') {
+			if (info.player && info.player.health < '100' && info.player.health > '1') {
 				totalhealth = info.player.health;
 				onHurt();
-				//_.throttle(onHurt, 800);
+				_.throttle(onHurt, 800);
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
 				scene = 'opselect';
 				vpEvent = 'introop';
@@ -377,7 +377,6 @@ require([
 			isApex = gameName === 'Apex';
 
 		let vpEvent;
-		let vpEvent2;
 
 		if (isSplitgate) {
 			for (let i = 0; i < e.events.length; i++) {
@@ -499,11 +498,6 @@ require([
 			} else if (eventName === 'roundOutcome') {
 				if (event.data === 'victory') {
 					vpEvent = 'victory';
-					/*if (rndcharval === 1) {
-						vpEvent2 = 'rangtaunt';
-					} else if (rndcharval === 2) {
-						vpEvent2 = 'visortaunt';
-					}*/
 				} else vpEvent = 'defeat';
 			} else if (eventName === 'death') {
 				killstreak = 0;
@@ -523,16 +517,15 @@ require([
 			console.log('onGameEvent():', vpEvent);
 			playVoice(vpEvent);
 		}
-		if (vpEvent2) {
-			console.log('onGameEvent2():', vpEvent2);
-			playVoice(vpEvent2);
-		}
 	}
 	function onHurt() {
 		let vpEvent;
 		if(totalhealth !== totalhealth2){
 			totalhealth2 = totalhealth;
 			vpEvent = 'hurt';
+			
+		}
+		if(vpEvent){
 			playVoice(vpEvent);
 		}
 	}
