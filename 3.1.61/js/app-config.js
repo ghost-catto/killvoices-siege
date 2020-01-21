@@ -12,7 +12,7 @@ define({
 		}
 	},
 	defaultVolume: 75,
-	defaultVP: 'Quake4Siege',
+	defaultVP: 'Swat4Siege',
 	games: [
 		{
 			id		: 5426,
