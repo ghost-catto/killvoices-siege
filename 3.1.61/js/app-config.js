@@ -11,7 +11,7 @@ define({
 			height	: 732
 		}
 	},
-	defaultVolume: 75,
+	defaultVolume: 1.0,
 	defaultVP: 'Swat4Siege',
 	games: [
 		{

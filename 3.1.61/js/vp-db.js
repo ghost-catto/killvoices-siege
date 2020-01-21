@@ -16,7 +16,9 @@ define(() => [
 			introop: [ 'sounds/intro/intro1.ogg', 'sounds/intro/intro2.ogg', 'sounds/intro/intro3.ogg', 'sounds/intro/intro4.ogg', 'sounds/intro/intro5.ogg', 'sounds/intro/intro6.ogg', 'sounds/intro/intro7.ogg', 'sounds/intro/intro8.ogg', 'sounds/intro/intro9.ogg', 'sounds/intro/intro10.ogg'],
 			round_start: [ 'sounds/rndstr/start1.ogg','sounds/rndstr/start2.ogg','sounds/rndstr/start3.ogg','sounds/rndstr/start4.ogg','sounds/rndstr/start5.ogg','sounds/rndstr/start6.ogg','sounds/rndstr/bombfound.ogg', 'sounds/rndstr/bombs.ogg' ],
 			victory: [ 'sounds/win/win1.ogg','sounds/win/win2.ogg','sounds/win/win3.ogg', 'sounds/win/win4.ogg', 'sounds/win/win5.ogg','sounds/win/win6.ogg','sounds/win/win7.ogg'],
-			defeat: [ 'sounds/lose/lose1.ogg', 'sounds/lose/lose2.ogg', 'sounds/lose/lose3.ogg', 'sounds/lose/lose4.ogg', 'sounds/lose/lose5.ogg', 'sounds/lose/lose6.ogg']
+			defeat: [ 'sounds/lose/lose1.ogg', 'sounds/lose/lose2.ogg', 'sounds/lose/lose3.ogg', 'sounds/lose/lose4.ogg', 'sounds/lose/lose5.ogg', 'sounds/lose/lose6.ogg'],
+			music: ['sounds/02-Fairfax1.ogg', 'sounds/05-Auto2.ogg', 'sounds/Expm05-Druglab1.ogg', 'sounds/Expm04-Office1.ogg'],
+			spotted: ['sounds/s2_SpottedContact_1.ogg', 'sounds/s2_SpottedContact_2.ogg', 'sounds/s2_SpottedContact_3.ogg']
 		}
 	}
 ]);
