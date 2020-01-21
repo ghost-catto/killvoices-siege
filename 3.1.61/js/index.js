@@ -18,7 +18,9 @@ var holder;
 var limit;
 var durationaudio;
 var trackid;
-
+var score;
+var score2;
+var scene;
 require([
 	'libs/ow-window',
 	'libs/state',
@@ -302,69 +304,29 @@ require([
 		let vpEvent;
 		if (totalhealth2 !== totalhealth) {
 			totalhealth2 = totalhealth;
-			if (rndcharval === 0) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'bithurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'bithurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'bithurtlarge';
-				}
-			} else if (rndcharval === 1) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'doomhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'doomhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'doomhurtlarge';
-				}
-			} else if (rndcharval === 2) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'razhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'razhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'razhurtlarge';
-				}
-			} else if (rndcharval === 3) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'sarhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'sarhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'sarhurtlarge';
-				}
-			} else if (rndcharval === 4) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'visorhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'visorhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'visorhurtlarge';
-				}
-			} else if (rndcharval === 5) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'grunhurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'grunhurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'grunhurtlarge';
-				}
-			} else if (rndcharval === 6) {
-				if (totalhealth <= '99' && totalhealth >= '66') {
-					vpEvent = 'ranghurtsmall';
-				} else if (totalhealth <= '65' && totalhealth >= '46') {
-					vpEvent = 'ranghurtmed';
-				} else if (totalhealth <= '45' && totalhealth >= '2') {
-					vpEvent = 'ranghurtlarge';
-				}
+				vpEvent = 'hurt';
 			}
 
 			if (vpEvent) {
 				playVoice(vpEvent);
 			}
 		}
-	}
+
+		function onKill(){
+			let vpEvent;
+			vpEvent = 'kills';
+			if (vpEvent) {
+				playVoice(vpEvent);
+			}
+		}
+
+		function onScore(){
+			let vpEvent;
+			let realScore;
+			let oldScore;
+
+			realScore = info.player.score;
+		}
 
 	function onInfoUpdate(i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
@@ -380,46 +342,33 @@ require([
 			isRainbowSix = game.name === 'RainbowSix';
 
 		let vpEvent;
-
 		if (isRainbowSix) {
-			if (info.round && info.round.number === '2') {
-				//roundnum = 1;
-				vpEvent = 'prepare';
-			} else if (info.round && info.round.number === '2') {
-				//roundnum = 2;
-				vpEvent = 'roundtwo';
-			} else if (info.round && info.round.number === '3') {
-				//roundnum = 3;
-				vpEvent = 'roundthree';
-			} else if (info.round && info.round.number === '4') {
-				//roundnum = 4;
-				vpEvent = 'roundfour';
-			} else if (info.player && info.player.health !== '100') {
+			 if (info.player && info.player.health < '100') {
 				totalhealth = info.player.health;
 				onHurt();
+				_.throttle(onHurt, 800);
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
-				rndcharval = getRandomInt(6);
-				if (rndcharval === 0) {
-					// BITTERMAN
-					vpEvent = 'bitterman';
-				} else if (rndcharval === 1) {
-					// DOOM
-					vpEvent = 'doom';
-				} else if (rndcharval === 2) {
-					// RAZOR
-					vpEvent = 'razor';
-				} else if (rndcharval === 3) {
-					vpEvent = 'sarge';
-				} else if (rndcharval === 4) {
-					vpEvent = 'visor';
-				} else if (rndcharval === 5) {
-					vpEvent = 'grunt';
-				} else if (rndcharval === 6) {
-					vpEvent = 'ranger';
-				}
-
+				scene = 'opselect';
+				vpEvent = 'introop';
 				if (vpEvent) playVoice(vpEvent);
+			}else if (info.player && info.player.score !== 0) {
+				score = info.player.score;
+				
+					if(score - score2 == 10){
+						
+
+						
+						
+						console.log(score2);
+							
+					}
+					score2 = score;
+					
+					
+					
 			}
+			
+		
 		}
 	}
 
@@ -434,11 +383,11 @@ require([
 		if (holder === 'kill') {
 			++killstreak;
 			if (killstreak === 1) {
-				vpEvent = 'killstreaks';
+				vpEvent = 'kills';
 			} else if (killstreak >= 2) {
-				vpEvent = 'killstreaks';
+				vpEvent = 'kills';
 			} else if (killstreak >= 5) {
-				vpEvent = 'probhacking';
+				vpEvent = 'kills';
 			}
 		}
 
@@ -584,8 +533,7 @@ require([
 				onRainbowSixEvent(e.events[i]);
 		}*/
 			if (eventName === 'roundStart') {
-				vpEvent = 'lowambient';
-				vpEvent2 = 'prepare';
+				vpEvent = 'round_start';
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
@@ -599,44 +547,17 @@ require([
 					} else if (rndcharval === 2) {
 						vpEvent2 = 'visortaunt';
 					}*/
-				} else vpEvent = 'alert';
+				} else vpEvent = 'defeat';
 			} else if (eventName === 'death') {
 				killstreak = 0;
 				headshotnum = 0;
+				vpEvent = 'death';
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
-				if (rndcharval === 0) {
-					vpEvent = 'bitdeath';
-				} else if (rndcharval === 1) {
-					vpEvent = 'doomdeath';
-				} else if (rndcharval === 2) {
-					vpEvent = 'razdeath';
-				} else if (rndcharval === 3){
-					vpEvent = 'sargedeath';
-				} else if (rndcharval === 4){
-					vpEvent = 'visordeath';
-				} else if (rndcharval === 5){
-					vpEvent = 'grundeath';    
-				} else if (rndcharval === 6){
-					vpEvent = 'rangdeath';
-				}
+				
 			} else if (eventName === 'kill') {
-				holder = 'kill';
-				hstimer = setTimeout(onRainbowSixEvent, 235, [ vpEvent, holder, killstreak ]);
-			} else if (eventName === 'headshot') {
-				holder = 'headshot';
-				clearTimeout(hstimer); // do not execute function holding code for normal kills
-				++headshotnum;
-				if (headshotnum === 1) {
-					vpEvent = 'headshot';
-				} else if (headshotnum === 2) {
-					vpEvent = 'twoheadshot';
-				} else if (headshotnum === 3) {
-					vpEvent = 'threeheadshot';
-				} else if (headshotnum >= 4) {
-					vpEvent = 'railgungod';
-				}
-			}
+				onKill();
+			} 
 		} else {
 			// Normal event
 			vpEvent = eventName; // This is the name of the event that was triggered
@@ -847,22 +768,11 @@ require([
 
 		var audionew = new Howl({
 			src: track.path,
+			volume: 0.15,
 			autoplay: false,
 			preload: false,
 			onload: function() {
-				audionew.volume = 0.45;
-				trackid = audionew.play();
-				trackholder.push(trackid);
-				console.log(trackid);
-				if (audionew.playing()) {
-					audionew.stop([ trackid ]);
-				} else {
-					fileplay = trackholder.shift();
-					audionew.play([ fileplay ]);
-				}
-			},
-			onend: function() {
-				if (trackholder.length > 0) audionew.play(trackholder.shift());
+				audionew.play();
 			}
 		});
 
