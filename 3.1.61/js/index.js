@@ -14,6 +14,7 @@ var headshotnum = 0;
 var holder;
 var limit;
 var totalhealth;
+var totalhealth2;
 var durationaudio;
 var trackid;
 var scene;
@@ -292,23 +293,7 @@ require([
 
 	//var hurtdelay = _.throttle(onHurt, 700, { leading: false });
 
-	function onHurt() {
-		let vpEvent;
-
-		vpEvent = 'hurt';
-
-		if (vpEvent) {
-			playVoice(vpEvent);
-		}
-	}
-
-	function onKill() {
-		let vpEvent;
-		vpEvent = 'kills';
-		if (vpEvent) {
-			playVoice(vpEvent);
-		}
-	}
+	
 
 	function onInfoUpdate(i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
@@ -325,7 +310,7 @@ require([
 
 		let vpEvent;
 		if (isRainbowSix) {
-			if (info.player && info.player.health < '100') {
+			if (info.player && info.player.health !== '100') {
 				totalhealth = info.player.health;
 				onHurt();
 				//_.throttle(onHurt, 800);
@@ -543,7 +528,22 @@ require([
 			playVoice(vpEvent2);
 		}
 	}
+	function onHurt() {
+		let vpEvent;
+		if(totalhealth !== totalhealth2){
+			totalhealth2 = totalhealth;
+			vpEvent = 'hurt';
+			playVoice(vpEvent);
+		}
+	}
 
+	function onKill() {
+		let vpEvent;
+		vpEvent = 'kills';
+		if (vpEvent) {
+			playVoice(vpEvent);
+		}
+	}
 	function installVP(id) {
 		vph.install(id);
 		console.log('installVP(): ' + id);
@@ -739,7 +739,7 @@ require([
 
 		var audionew = new Howl({
 			src: track.path,
-			volume: 0.15,
+			volume: 0.40,
 			autoplay: false,
 			preload: false,
 			onload: function() {
