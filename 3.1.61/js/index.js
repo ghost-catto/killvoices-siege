@@ -13,6 +13,7 @@ var killstreak = 0;
 var headshotnum = 0;
 var holder;
 var limit;
+
 var totalhealth;
 var totalhealth2;
 var durationaudio;
@@ -49,7 +50,7 @@ require([
 
 	let downloadedVPsPath, setFeaturesRetryTimeout, appManifest, userInfo;
 	// overwatchMatchStarting = false;
-
+	 
 	async function init() {
 		console.log('init(): Killer Voices starting');
 		ga('send', 'event', 'app_launches', 'App starting');
@@ -294,11 +295,12 @@ require([
 	//var hurtdelay = _.throttle(onHurt, 700, { leading: false });
 
 	
+	
 
 	function onInfoUpdate(i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
 		console.log('onInfoUpdate():', i.info);
-
+		var handler = _.throttle(onHurt, 800);
 		if (!i || !i.info) {
 			console.warn('onInfoUpdate(): No info: ' + JSON.stringify(i));
 			return false;
@@ -307,13 +309,17 @@ require([
 		const info = i.info,
 			game = state.get('gameRunning'),
 			isRainbowSix = game.name === 'RainbowSix';
-
+			
 		let vpEvent;
 		if (isRainbowSix) {
 			if (info.player && info.player.health < '100' && info.player.health > '1') {
 				totalhealth = info.player.health;
 				onHurt();
-				_.throttle(onHurt, 800);
+				
+				
+				
+				
+				
 			} else if (info.game_info && info.game_info.phase === 'operator_select') {
 				scene = 'opselect';
 				vpEvent = 'introop';
@@ -528,6 +534,7 @@ require([
 		if(vpEvent){
 			playVoice(vpEvent);
 		}
+		
 	}
 
 	function onKill() {
