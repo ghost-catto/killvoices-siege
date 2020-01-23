@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 define(() => [
 	{
+<<<<<<< Updated upstream
 		id: 'Quake4Siege',
 		origin: 'app',
 		title: 'Quake4Siege',
@@ -71,6 +72,104 @@ define(() => [
 			killstreaks: [ 'sounds/kills/shad.wav', 'sounds/kills/evas.wav', 'sounds/kills/merci.wav' ]
 		}
 	}
+=======
+		id: "Swat4Siege",
+		origin: "app",
+		title: "Swat4Siege",
+		shortTitle: "Swat4Siege",
+		acquiredBy: "preinstall",
+
+		RainbowSix: {
+			kills: [
+				"sounds/bluekill/kill1.ogg",
+				"sounds/bluekill/kill2.ogg",
+				"sounds/bluekill/kill3.ogg",
+				"sounds/bluekill/kill4.ogg",
+				"sounds/bluekill/kill5.ogg",
+				"sounds/bluekill/kill6.ogg",
+				"sounds/bluekill/kill7.ogg",
+				"sounds/bluekill/kill8.ogg",
+				"sounds/bluekill/kill9.ogg",
+				"sounds/bluekill/kill10.ogg",
+				"sounds/bluekill/kill11.ogg",
+				"sounds/bluekill/kill12.ogg",
+				"sounds/bluekill/kill13.ogg",
+				"sounds/bluekill/kill14.ogg",
+				"sounds/bluekill/kill15.ogg",
+			],
+			hurt: [
+				"sounds/hurt/back.ogg",
+				"sounds/hurt/back2.ogg",
+				"sounds/hurt/fire.ogg",
+			],
+			death: [
+				"sounds/death/dead1.ogg",
+				"sounds/death/dead2.ogg",
+				"sounds/death/dead3.ogg",
+			],
+			teamkill: [
+				"sounds/tk/tk1.ogg",
+			],
+			bomb: [
+				"sounds/s2_SpottedContact_1.ogg",
+			],
+			introop: [
+				"sounds/intro/intro1.ogg",
+				"sounds/intro/intro2.ogg",
+				"sounds/intro/intro3.ogg",
+				"sounds/intro/intro4.ogg",
+				"sounds/intro/intro5.ogg",
+				"sounds/intro/intro6.ogg",
+				"sounds/intro/intro7.ogg",
+				"sounds/intro/intro8.ogg",
+				"sounds/intro/intro9.ogg",
+				"sounds/intro/intro10.ogg",
+			],
+			round_start: [
+				"sounds/rndstr/start1.ogg",
+				"sounds/rndstr/start2.ogg",
+				"sounds/rndstr/start3.ogg",
+				"sounds/rndstr/start4.ogg",
+				"sounds/rndstr/start5.ogg",
+				"sounds/rndstr/start6.ogg",
+				"sounds/rndstr/bombfound.ogg",
+				"sounds/rndstr/bombs.ogg",
+			],
+			victory: [
+				"sounds/win/win1.ogg",
+				"sounds/win/win2.ogg",
+				"sounds/win/win3.ogg",
+				"sounds/win/win4.ogg",
+				"sounds/win/win5.ogg",
+				"sounds/win/win6.ogg",
+				"sounds/win/win7.ogg",
+			],
+			defeat: [
+				"sounds/lose/lose1.ogg",
+				"sounds/lose/lose2.ogg",
+				"sounds/lose/lose3.ogg",
+				"sounds/lose/lose4.ogg",
+				"sounds/lose/lose5.ogg",
+				"sounds/lose/lose6.ogg",
+			],
+			musicten: [
+				"sounds/mus/TEN.ogg",
+			],
+			musicdynten: [
+				"sounds/mus/TENDYN.ogg",
+			],
+			dyn: [
+				"sounds/hurt/comp.ogg",
+				"sounds/hurt/comp2.ogg",
+			],
+			spotted: [
+				"sounds/s2_SpottedContact_1.ogg",
+				"sounds/s2_SpottedContact_2.ogg",
+				"sounds/s2_SpottedContact_3.ogg",
+			],
+		},
+	},
+>>>>>>> Stashed changes
 ]);
 
 /*{

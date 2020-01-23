@@ -7,10 +7,13 @@ require.config({
 });
 
 var hstimer;
+<<<<<<< Updated upstream
 var audiohandle;
 var totalhealth;
 var rndcharval = 2;
 var totalhealth2;
+=======
+>>>>>>> Stashed changes
 var hurttimer;
 var killstreak = 0;
 var headshotnum = 0;
@@ -18,6 +21,7 @@ var holder;
 var limit;
 var durationaudio;
 var trackid;
+<<<<<<< Updated upstream
 
 require([
 	'libs/ow-window',
@@ -36,6 +40,44 @@ require([
 	'libs/underscore'
 ], function(owWindow, stateManagers, messenger, gameStatus, utils, ga, appConfig, audioPlayer, downloader, vph) {
 	'use strict';
+=======
+var track2;
+var scene;
+var gained;
+var dynamictimer;
+var slowdown;
+var slowed;
+require([
+	"libs/ow-window",
+	"libs/state",
+	"libs/messenger",
+	"libs/game-status",
+	"libs/utils",
+
+	"libs/ga",
+
+	"app-config",
+	"audio-player",
+	"downloader",
+	"voice-packs",
+	"libs/howler.min",
+	"libs/lodash",
+], function (
+	owWindow,
+	stateManagers,
+	messenger,
+	gameStatus,
+	utils,
+	ga,
+	appConfig,
+	audioPlayer,
+	downloader,
+	vph,
+	HowlerLib,
+	Sound,
+) {
+	"use strict";
+>>>>>>> Stashed changes
 
 	const { state, persState } = stateManagers;
 
@@ -48,7 +90,7 @@ require([
 
 	const startedWithGameEvent = location.href.includes('gamelaunchevent');
 
-	let downloadedVPsPath, setFeaturesRetryTimeout, appManifest, userInfo;
+	var downloadedVPsPath, setFeaturesRetryTimeout, appManifest, userInfo;
 	// overwatchMatchStarting = false;
 
 	async function init() {
@@ -66,11 +108,67 @@ require([
 			builtIn: appConfig.voicePacksDir
 		});
 
+		var Sound = function () {
+			this.music = new Howl({
+				src: track.path,
+				autoplay: false,
+				loop: true,
+				volume: 0.2,
+				onend: function () {},
+			});
+
+			this.playervoice = new Howl({
+				src: track.path,
+				autoplay: false,
+				loop: false,
+				volume: 1.0,
+				onend: function () {},
+			});
+
+			this.toc = new Howl({
+				src: track.path,
+				autoplay: false,
+				loop: true,
+				volume: 1.0,
+				onend: function () {},
+			});
+
+			this.init = function () {
+				var self = this;
+			};
+
+			this.update = function () {
+				if (Keyboard.M.down) {
+					Keyboard.M.down = false;
+					this.toggleMute();
+				}
+			};
+
+			this.toggleMute = function () {
+				Global.mute = !Global.mute;
+				if (Global.mute) {
+					Howler.mute();
+					this.buttonMute.alpha = 0.5;
+				} else {
+					Howler.unmute();
+					this.buttonMute.alpha = 1;
+				}
+			};
+
+			return new Sound();
+		};
+
 		await verifyVPsInstalled();
 
+<<<<<<< Updated upstream
 		let logMessage = 'init(): App started: ' + appManifest.meta.version + ' / ' + appManifest.UID,
 			gaMessage = 'App started: v.' + appManifest.meta.version,
 			gameLaunchEventPostfix = ' / GameLaunch event';
+=======
+		var logMessage = "init(): App started: " + appManifest.meta.version + " / " + appManifest.UID,
+			gaMessage = "App started: v." + appManifest.meta.version,
+			gameLaunchEventPostfix = " / GameLaunch event";
+>>>>>>> Stashed changes
 
 		if (startedWithGameEvent) {
 			logMessage += gameLaunchEventPostfix;
@@ -151,7 +249,7 @@ require([
 			paths = [],
 			pathsToNames = {};
 
-		for (let i = 0; i < installedVPsLength; i++) {
+		for (var i = 0; i < installedVPsLength; i++) {
 			const id = installedVPs[i],
 				vp = vph.get(id, 'general');
 
@@ -167,7 +265,7 @@ require([
 		const results = await downloader.checkDirsExist(paths),
 			uninstall = [];
 
-		for (let path in results) {
+		for (var path in results) {
 			if (results[path] === false) uninstall.push(pathsToNames[path]);
 		}
 
@@ -294,8 +392,11 @@ require([
 				console.log('setFeatures(): Set features successfully: ' + JSON.stringify(info));
 			}
 		});
+		dynamictimer = _.throttle(dynamic, 25000);
+		dynamictimer();
 	}
 
+<<<<<<< Updated upstream
 	//var hurtdelay = _.throttle(onHurt, 700, { leading: false });
 
 	function onHurt() {
@@ -336,6 +437,9 @@ require([
 	}
 
 	function onInfoUpdate(i) {
+=======
+	function onInfoUpdate (i) {
+>>>>>>> Stashed changes
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
 		console.log('onInfoUpdate():', i.info);
 
@@ -345,6 +449,7 @@ require([
 		}
 
 		const info = i.info,
+<<<<<<< Updated upstream
 			game = state.get('gameRunning'),
 			isRainbowSix = game.name === 'RainbowSix';
 
@@ -388,15 +493,48 @@ require([
 				}*/
 
 				if (vpEvent) playVoice(vpEvent);
+=======
+			game = state.get("gameRunning"),
+			isRainbowSix = game.name === "RainbowSix";
+		var throttlehurt = _.throttle(onHurt, 4000);
+		var vpEvent;
+		if (isRainbowSix) {
+			if (info.player && info.player.health < "100") {
+				totalhealth = info.player.health;
+				throttlehurt();
+			} else if (info.game_info && info.game_info.phase === "operator_select") {
+				scene = "opselect";
+				vpEvent = "introop";
+				//playVoice("music");
+				if (vpEvent) playVoice(vpEvent);
+			} else if (info.game_info && info.game_info.phase === "round_results") {
+				scene = "round_results";
+			} else if (info.player && info.player.score > 0) {
+				if (score !== score2) {
+					score2 = score;
+					score = info.player.score;
+					gained = score - score2;
+
+					console.log(score);
+					console.log(score2);
+					console.log(gained);
+				}
+				if (score == undefined) {
+					score = info.player.score;
+				}
+>>>>>>> Stashed changes
 			}
 		}
 	}
-
+	function onHurt () {
+		playVoice("hurt");
+	}
 	// IDK what the fuck i'm doing help me
 	// delaying a seperate function if the kill event is risen
 	//  and only fires if the headshot event is not risen within
 	// 150 ms of kill event firing
 
+<<<<<<< Updated upstream
 	function onRainbowSixEvent() {
 		let vpEvent;
 
@@ -414,6 +552,13 @@ require([
 		if (vpEvent) {
 			console.log('onGameEvent(HOLDER):', vpEvent);
 			playVoice(vpEvent);
+=======
+	function onRainbowSixEvent () {
+		var vpEvent;
+
+		if (holder === "kill") {
+			vpEvent = "kills";
+>>>>>>> Stashed changes
 		}
 	}
 
@@ -439,11 +584,15 @@ require([
 			isSplitgate = gameName === 'Splitgate',
 			isApex = gameName === 'Apex';
 
+<<<<<<< Updated upstream
 		let vpEvent;
 		let vpEvent2;
+=======
+		var vpEvent;
+>>>>>>> Stashed changes
 
 		if (isSplitgate) {
-			for (let i = 0; i < e.events.length; i++) {
+			for (var i = 0; i < e.events.length; i++) {
 				onRainbowSixEvent(eventName);
 			}
 
@@ -457,6 +606,7 @@ require([
 
 			vpEvent = 'announcer_' + eventData.name;
 
+<<<<<<< Updated upstream
 			if (eventData.data) vpEvent += '_' + eventData.data;
 		} else if (isPUBG) {
 			switch (eventName) {
@@ -558,6 +708,16 @@ require([
 			} else if (eventName === 'roundEnd') {
 				vpEvent = 'round_end';
 			} else if (eventName === 'matchOutcome') {
+=======
+			if (eventData.data) vpEvent += "_" + eventData.data;
+		} else if (isRainbowSix) {
+			if (eventName === "roundStart") {
+				vpEvent = "round_start";
+				playVoice("musicten");
+			} else if (eventName === "roundEnd") {
+				vpEvent = "round_end";
+			} else if (eventName === "matchOutcome") {
+>>>>>>> Stashed changes
 				killstreak = 0;
 				headshotnum = 0;
 			} else if (eventName === 'roundOutcome') {
@@ -574,6 +734,7 @@ require([
 				headshotnum = 0;
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
+<<<<<<< Updated upstream
 				if (rndcharval === 0) {
 					vpEvent = 'bitdeath';
 				} else if (rndcharval === 1) {
@@ -597,6 +758,11 @@ require([
 				} else if (headshotnum >= 4) {
 					vpEvent = 'railgungod';
 				}
+=======
+			} else if (eventName === "kill") {
+				++killstreak;
+				onKill();
+>>>>>>> Stashed changes
 			}
 		} else {
 			// Normal event
@@ -608,6 +774,7 @@ require([
 			playVoice(vpEvent);
 			
 		}
+<<<<<<< Updated upstream
 		if (vpEvent2) {
 			console.log('onGameEvent2():', vpEvent2);
 			playVoice(vpEvent2);
@@ -615,6 +782,23 @@ require([
 	}
 
 	function installVP(id) {
+=======
+	}
+
+	function dynamic () {}
+	function onKill () {
+		var vpEvent;
+		if (killstreak === 1) {
+			playVoice("dyn");
+			dynamictimer = _.throttle(dynamic, 25000, { trailing: true });
+		}
+		//vpEvent = "kills";
+		if (vpEvent) {
+			playVoice(vpEvent);
+		}
+	}
+	function installVP (id) {
+>>>>>>> Stashed changes
 		vph.install(id);
 		console.log('installVP(): ' + id);
 		ga('send', 'event', 'vp_selection', 'Voicepack installed: ' + id);
@@ -776,9 +960,36 @@ require([
 			}
 		});
 	}
+	function playSpeech (event) {
+		var id = appConfig.defaultVP,
+			vp = vph.get(id);
 
+		const volume = getVolumeForGame(game.name),
+			track = vp.getTrack({ game: game.name, event });
+	}
+
+	function playToc (event) {
+		var id = appConfig.defaultVP,
+			vp = vph.get(id);
+
+<<<<<<< Updated upstream
 	function playVoice(event, event2) {
 		const game = state.get('gameRunning');
+=======
+		const volume = getVolumeForGame(game.name),
+			track = vp.getTrack({ game: game.name, event });
+	}
+
+	function playMusic (event) {
+		var id = appConfig.defaultVP,
+			vp = vph.get(id);
+
+		const volume = getVolumeForGame(game.name),
+			track = vp.getTrack({ game: game.name, event });
+	}
+	function playVoice (event) {
+		const game = state.get("gameRunning");
+>>>>>>> Stashed changes
 
 		if (!game) return false;
 
@@ -787,16 +998,17 @@ require([
 			return false;
 		}
 
+<<<<<<< Updated upstream
 		const id = vph.selectedVPs[game.name] || appConfig.defaultVP,
 			vp = vph.get(id);
 
 		if (vp.type === 'custom' && vp.game !== game.name) {
+=======
+		if (vp.type === "custom" && vp.game !== game.name) {
+>>>>>>> Stashed changes
 			console.log(`playVoice(): vp is for a different game: ${vp.game}/${game}`);
 			return false;
 		}
-
-		const volume = getVolumeForGame(game.name),
-			track = vp.getTrack({ game: game.name, event });
 
 		if (!track || !track.path) {
 			// console.log(`playVoice(): No track for ${game.name}/${event}`);
@@ -806,6 +1018,7 @@ require([
 		let trackholder = [];
 		let fileplay;
 		// TODO: fix audio queues
+<<<<<<< Updated upstream
 		
 		var audionew = new Howl({
 			src: track.path,
@@ -828,6 +1041,10 @@ require([
 		});
 
 		return audionew.load();
+=======
+
+		return;
+>>>>>>> Stashed changes
 	}
 
 	init().catch((e) => {
