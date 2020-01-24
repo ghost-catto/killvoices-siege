@@ -11,8 +11,8 @@ define({
 			height	: 732
 		}
 	},
-	defaultVolume: 75,
-	defaultVP: 'Quake4Siege',
+	defaultVolume: 1.0,
+	defaultVP: 'Swat4Siege',
 	games: [
 		{
 			id		: 5426,
