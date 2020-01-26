@@ -12,6 +12,8 @@ var audiohandle;
 var hurttimer;
 var killstreak = 0;
 var headshotnum = 0;
+var isStealth;
+var isDynamic;
 var holder;
 var limit;
 var score;
@@ -19,7 +21,7 @@ var score2;
 var totalhealth;
 var totalhealth2;
 var durationaudio;
-
+var teamx;
 var trackid;
 var scene;
 var gained;
@@ -33,17 +35,16 @@ require([
 	"libs/ga",
 
 	"app-config",
-	"audio-player",
 	"downloader",
 	"voice-packs",
 	"libs/howler",
+	"libs/howler.core",
 	"libs/lodash",
-	"betteraudio",
-], function (owWindow, stateManagers, messenger, gameStatus, utils, ga, appConfig, audioPlayer, downloader, vph) {
+], function (owWindow, stateManagers, messenger, gameStatus, utils, ga, appConfig, downloader, vph, Howler) {
 	"use strict";
 
 	const { state, persState } = stateManagers;
-	const { getRequest, delay } = utils;
+	const { getRequest } = utils;
 
 	const indexWin = new owWindow("index"),
 		noticeWin = new owWindow("notice"),
@@ -54,36 +55,35 @@ require([
 
 	let downloadedVPsPath, setFeaturesRetryTimeout, appManifest, userInfo;
 	// overwatchMatchStarting = false;
-	var Pmusic = new Howl({
-		src      : "../VoicePacks/Swat4Siege/sounds/mus/TEN.ogg",
+
+	//var musicrandom;
+	Howler.usingWebAudio = true;
+	Howler.autoSuspend = false;
+
+	var stealthMusic = new Howl({
+		src      : "sounds/hurt/takehim.ogg",
 		preload  : false,
 		autoplay : false,
 		loop     : true,
-		volume   : 0.1,
-		onload   : function () {
-			Pmusic.play();
-		},
+		volume   : 0.11,
 	});
 
-	var Dmusic = new Howl({
-		src      : "../VoicePacks/Swat4Siege/sounds/mus/TEN.ogg",
+	var dynamicMusic = new Howl({
+		src      : "sounds/hurt/takehim.ogg",
 		preload  : false,
 		autoplay : false,
 		loop     : true,
-		volume   : 0.1,
-		onload   : function () {
-			Dmusic.play();
-		},
+		volume   : 0.11,
 	});
 
-	var Dvoice = new Howl({
-		src      : "../VoicePacks/Swat4Siege/sounds/mus/TEN.ogg",
+	var dynamicVoice = new Howl({
+		src      : "sounds/hurt/takehim.ogg",
 		preload  : false,
-		autoplay : false,
+		autoplay : true,
 		loop     : false,
 		volume   : 1.0,
-		onload   : function () {},
 	});
+
 	async function init () {
 		console.log("init(): Killer Voices starting");
 		ga("send", "event", "app_launches", "App starting");
@@ -327,11 +327,10 @@ require([
 				console.log("setFeatures(): Set features successfully: " + JSON.stringify(info));
 			}
 		});
-		//Sound2(music.load());
-		playDynamic("dyn");
+		goDynamic();
 	}
 
-	//var hurtdelay = _.throttle(onHurt, 700, { leading: false });
+	var DynTimer;
 
 	function onInfoUpdate (i) {
 		// console.log('onInfoUpdate(): raw: '+ JSON.stringify(info));
@@ -344,27 +343,19 @@ require([
 		const info = i.info,
 			game = state.get("gameRunning"),
 			isRainbowSix = game.name === "RainbowSix";
-		var thrott1 = _.throttle(function () {
-			playVoice("spotted");
-		}, 1000);
-		var thrott2 = _.throttle(function () {
-			playVoice("hurt");
-		}, 600);
-		var scenedb = _.delay(function () {
-			scene = undefined;
-		}, 45000);
-		let vpEvent;
+
 		if (isRainbowSix) {
 			if (info.player && info.player.health < "100" && info.player.health > "1") {
 				totalhealth = info.player.health;
-				thrott2();
+				onHurt();
 			} else if (info.game_info && info.game_info.phase === "operator_select") {
 				scene = "opselect";
-				vpEvent = "introop";
-				playMusic("music");
-				if (vpEvent) playVoice(vpEvent);
+				playDynamic("introop");
+				playDefMus("stealthmus");
 			} else if (info.game_info && info.game_info.phase === "round_results") {
 				scene = "round_results";
+			} else if (info.game_info && info.game_info.phase === "lobby") {
+				playDefMus("menu");
 			} else if (info.player && info.player.score > 0) {
 				if (score !== score2) {
 					score2 = score;
@@ -378,12 +369,6 @@ require([
 				if (score == undefined) {
 					score = info.player.score;
 				}
-				if (scene === "round_results" && gained === 10) {
-					if (info.player.team === "blue") {
-						scenedb();
-						thrott1();
-					}
-				}
 			}
 		}
 	}
@@ -392,26 +377,6 @@ require([
 	// delaying a seperate function if the kill event is risen
 	//  and only fires if the headshot event is not risen within
 	// 150 ms of kill event firing
-
-	function onRainbowSixEvent () {
-		let vpEvent;
-
-		if (holder === "kill") {
-			++killstreak;
-			if (killstreak === 1) {
-				vpEvent = "kills";
-			} else if (killstreak >= 2) {
-				vpEvent = "kills";
-			} else if (killstreak >= 5) {
-				vpEvent = "kills";
-			}
-		}
-
-		if (vpEvent) {
-			console.log("onGameEvent(HOLDER):", vpEvent);
-			playVoice(vpEvent);
-		}
-	}
 
 	function onGameEvent (e) {
 		// console.log('onGameEvent(): raw: '+ JSON.stringify(e));
@@ -548,7 +513,7 @@ require([
 				onRainbowSixEvent(e.events[i]);
 		}*/
 			if (eventName === "roundStart") {
-				vpEvent = "round_start";
+				playDynamic("redpos");
 			} else if (eventName === "roundEnd") {
 				vpEvent = "round_end";
 			} else if (eventName === "matchOutcome") {
@@ -556,16 +521,18 @@ require([
 				headshotnum = 0;
 			} else if (eventName === "roundOutcome") {
 				if (event.data === "victory") {
-					vpEvent = "victory";
 				} else vpEvent = "defeat";
 			} else if (eventName === "death") {
 				killstreak = 0;
 				headshotnum = 0;
-				vpEvent = "death";
+
 				clearTimeout(hstimer);
 				clearTimeout(hurttimer); // here because dying within 200 ms of a kill will still play kill audio otherwise
 			} else if (eventName === "kill") {
-				onKill();
+				++killstreak;
+				if (killstreak === 1 && isDynamic === false) {
+					goDynamic();
+				}
 			}
 		} else {
 			// Normal event
@@ -574,26 +541,44 @@ require([
 
 		if (vpEvent) {
 			console.log("onGameEvent():", vpEvent);
-			playVoice(vpEvent);
 		}
 	}
 	function onHurt () {
-		let vpEvent;
 		if (totalhealth !== totalhealth2) {
 			totalhealth2 = totalhealth;
-			vpEvent = "hurt";
-		}
-		if (vpEvent) {
-			playVoice(vpEvent);
+			playDynamic("hurt");
 		}
 	}
 
 	function onKill () {
-		let vpEvent;
-		vpEvent = "kills";
-		if (vpEvent) {
-			playDynamic(vpEvent);
+		if (isDynamic === true) {
+			playDynamic("dykill");
+			clearTimeout(DynTimer);
+			DynTimer = setTimeout(goStealth, 15000);
+		} else if (isStealth === true && isDynamic === false) {
+			playDynamic("stkill");
 		}
+	}
+
+	function goDynamic () {
+		DynTimer = setTimeout(goStealth, 15000);
+		isDynamic = true;
+		isStealth = false;
+
+		if (killstreak === 1) {
+			playDynamic("dyn");
+		} else if (killstreak > 1) {
+			onKill();
+		}
+		playDynMus("dynmus");
+	}
+
+	function goStealth () {
+		clearTimeout(DynTimer);
+		isStealth = true;
+		isDynamic = false;
+		playDynamic("slowitdown");
+		playDefMus("stealthmus");
 	}
 
 	function installVP (id) {
@@ -737,26 +722,8 @@ require([
 			console.log(`previewVP(): No track for ${game}/${event}`, track);
 			return false;
 		}
-
-		await audioPlayer.playTrack({
-			src    : track.path,
-			volume,
-			before : () =>
-				messenger.send("main", "vpState", {
-					id,
-					key : "playing",
-					val : true,
-				}),
-			after  : async () => {
-				await messenger.send("main", "vpState", {
-					id,
-					key : "playing",
-					val : false,
-				});
-				await delay(50);
-			},
-		});
 	}
+
 	function playDynamic (event) {
 		const game = state.get("gameRunning");
 
@@ -783,14 +750,49 @@ require([
 			return false;
 		}
 
+		dynamicVoice._src = track.path;
+
 		// TODO: fix audio queues
-		Dvoice.unload();
-		Dvoice._src = track.path;
-		Dvoice.load();
-		return Dvoice.play();
+
+		dynamicVoice.load();
+		dynamicVoice.play();
 	}
 
-	function playVoice (event) {
+	function playDynMus (event) {
+		const game = state.get("gameRunning");
+
+		if (!game) return false;
+
+		if (persState.get("disabled/" + game.name)) {
+			console.log(`playVoice(): Disabled for ${game.name}`);
+			return false;
+		}
+
+		const id = appConfig.defaultVP,
+			vp = vph.get(id);
+
+		if (vp.type === "custom" && vp.game !== game.name) {
+			console.log(`playVoice(): vp is for a different game: ${vp.game}/${game}`);
+			return false;
+		}
+
+		const volume = getVolumeForGame(game.name),
+			track = vp.getTrack({ game: game.name, event });
+
+		if (!track || !track.path) {
+			// console.log(`playVoice(): No track for ${game.name}/${event}`);
+			return false;
+		}
+		stealthMusic.stop();
+		dynamicMusic.stop();
+
+		dynamicMusic._src = track.path;
+
+		dynamicMusic.load();
+		dynamicMusic.play();
+	}
+
+	function playDefMus (event) {
 		const game = state.get("gameRunning");
 
 		if (!game) return false;
@@ -816,19 +818,13 @@ require([
 			return false;
 		}
 
-		// TODO: fix audio queues
+		stealthMusic.stop();
+		dynamicMusic.stop();
 
-		var audionew = new Howl({
-			src      : track.path,
-			volume   : volume / 500,
-			autoplay : false,
-			preload  : false,
-			onload   : function () {
-				audionew.play();
-			},
-		});
+		stealthMusic._src = track.path;
 
-		return audionew.load();
+		stealthMusic.load();
+		stealthMusic.play();
 	}
 
 	init().catch((e) => {
