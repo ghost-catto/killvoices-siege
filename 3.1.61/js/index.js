@@ -79,7 +79,7 @@ require([
 	var dynamicVoice = new Howl({
 		src      : "sounds/hurt/takehim.ogg",
 		preload  : false,
-		autoplay : true,
+		autoplay : false,
 		loop     : false,
 		volume   : 1.0,
 	});
@@ -327,7 +327,6 @@ require([
 				console.log("setFeatures(): Set features successfully: " + JSON.stringify(info));
 			}
 		});
-		goDynamic();
 	}
 
 	var DynTimer;
@@ -347,7 +346,7 @@ require([
 		if (isRainbowSix) {
 			if (info.player && info.player.health < "100" && info.player.health > "1") {
 				totalhealth = info.player.health;
-				onHurt();
+				//onHurt();
 			} else if (info.game_info && info.game_info.phase === "operator_select") {
 				scene = "opselect";
 				playDynamic("introop");
@@ -749,7 +748,8 @@ require([
 			// console.log(`playVoice(): No track for ${game.name}/${event}`);
 			return false;
 		}
-
+		dynamicVoice.stop();
+		dynamicVoice.unload();
 		dynamicVoice._src = track.path;
 
 		// TODO: fix audio queues
