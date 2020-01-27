@@ -17,8 +17,9 @@ define(() => [
 			],
 			dykill     : [
 				"sounds/bluekill/susdyn.wav",
-				"sounds/bluekill/susdyn.wav",
 				"sounds/bluekill/DYN3.wav",
+				"sounds/bluekill/Dynkill6.wav",
+				"sounds/bluekill/dynkill7.wav",
 			],
 			dyngad     : [
 				"sounds/points/coverdyn.wav",
@@ -35,22 +36,21 @@ define(() => [
 				"sounds/hurt/fire.wav",
 				"sounds/hurt/taking.wav",
 			],
-			bluepos    : [
+			redpos     : [
 				"sounds/intro/inpos.wav",
 				"sounds/intro/inpos2.wav",
-			],
-			redpos     : [
 				"sounds/intro/move (1).wav",
 				"sounds/intro/move (2).wav",
 				"sounds/intro/move (3).wav",
 			],
-			death      : [
-				"sounds/death/dead1.ogg",
-				"sounds/death/dead2.ogg",
-				"sounds/death/dead3.ogg",
+			injured    : [
+				"sounds/death/takehim.wav",
 			],
-			teamkill   : [
-				"sounds/tk/tk1.ogg",
+			death      : [
+				"sounds/death/OFFC1.wav",
+				"sounds/death/OFFC2.wav",
+				"sounds/death/OFFC3.wav",
+				"sounds/death/ofFC4.wav",
 			],
 			bomb       : [
 				"sounds/s2_SpottedContact_1.ogg",
@@ -82,8 +82,6 @@ define(() => [
 				"sounds/mus/10-Hosp1.ogg",
 				"sounds/mus/10-Hosp1.ogg",
 				"sounds/mus/Expm05-Druglab1.ogg",
-				"sounds/mus/Expm05-Druglab2Dyn.ogg",
-				"sounds/mus/Expm03-Backstage1.ogg",
 				"sounds/mus/Expm03-Backstage1.ogg",
 			],
 			dynmus     : [
@@ -102,12 +100,6 @@ define(() => [
 				"sounds/mus/Expm05-Druglab2Dyn.ogg",
 				"sounds/mus/Expm07-Warehouse1Dyn.ogg",
 			],
-			slow       : [
-				"sounds/02-Fairfax1.ogg",
-				"sounds/05-Auto2.ogg",
-				"sounds/Expm05-Druglab1.ogg",
-				"sounds/Expm04-Office1.ogg",
-			],
 			menu       : [
 				"sounds/mus/Heat_Cue.wav",
 			],
@@ -115,6 +107,10 @@ define(() => [
 				"sounds/dynamic/dyn.wav",
 				"sounds/dynamic/dyn2.wav",
 				"sounds/dynamic/dyn3.wav",
+				"sounds/dynamic/shotsfired.wav",
+				"sounds/dynamic/compro.wav",
+				"sounds/hurt/comp.wav",
+				"sounds/hurt/comp2.wav",
 			],
 			slowitdown : [
 				"sounds/dynamic/slow1.wav",
